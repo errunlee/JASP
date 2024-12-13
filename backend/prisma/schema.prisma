@@ -7,6 +7,152 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id               Int                  @id @default(autoincrement())
+  username         String               @unique @db.VarChar(50)
+  password         String               @db.VarChar(255)
+  email            String               @unique @db.VarChar(100)
+  fullName         String?              @db.VarChar(100)
+  address          String?              @db.VarChar(255)
+  phoneNumber      String?              @db.VarChar(20)
+  roles            UserRole[]
+  kycVerified      Boolean              @default(false)
+  profilePicture   String?              @db.VarChar(255)
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  isDeleted        Boolean              @default(false)
+  commerceProducts CommerceProduct[]
+  claimedDonations Donation[]           @relation("UserClaims")
+  donations        Donation[]           @relation("UserDonations")
+  participations   FundingParticipant[]
+  kycDocuments     KnowYourCustomer[]
+  posts            Post[]
+  requests         Request[]
+  scrapProducts    ScrapProduct[]
+  checkpoints      Checkpoint[]         @relation("CheckpointToUser")
+  notifications    Notification[]       @relation("NotificationToUser")
+}
+
+model KnowYourCustomer {
+  id                   Int          @id @default(autoincrement())
+  documentType         DocumentType
+  identificationNumber String       @unique @db.VarChar(50)
+  picture              String       @db.VarChar(255)
+  userId               Int
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  createdBy            String?      @db.VarChar(50)
+  updatedBy            String?      @db.VarChar(50)
+  user                 User         @relation(fields: [userId], references: [id])
+}
+
+model ScrapProduct {
+  id        Int      @id @default(autoincrement())
+  type      String   @db.VarChar(100)
+  price     Float
+  details   String
+  image     String   @db.VarChar(255)
+  dealerId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+  dealer    User     @relation(fields: [dealerId], references: [id])
+}
+
+model Donation {
+  id        Int             @id @default(autoincrement())
+  name      String          @db.VarChar(255)
+  donatorId Int
+  image     String          @db.VarChar(255)
+  details   String
+  claimerId Int?
+  category  ProductCategory
+  location  String          @db.VarChar(255)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  isDeleted Boolean         @default(false)
+  claimer   User?           @relation("UserClaims", fields: [claimerId], references: [id])
+  donator   User            @relation("UserDonations", fields: [donatorId], references: [id])
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  authorId    Int
+  title       String   @db.VarChar(255)
+  description String
+  content     String
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted   Boolean  @default(false)
+  author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Request {
+  id             Int                  @id @default(autoincrement())
+  title          String               @db.VarChar(255)
+  requesterId    Int
+  description    String
+  goal           Float
+  date           DateTime
+  duration       Int
+  location       String               @db.VarChar(255)
+  totalAmount    Float                @default(0)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  isDeleted      Boolean              @default(false)
+  participations FundingParticipant[]
+  requester      User                 @relation(fields: [requesterId], references: [id])
+}
+
+model FundingParticipant {
+  id        Int      @id @default(autoincrement())
+  requestId Int
+  userId    Int
+  amount    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  request   Request  @relation(fields: [requestId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model CommerceProduct {
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(255)
+  details    String
+  image      String   @db.VarChar(255)
+  price      Float
+  postedById Int
+  status     String   @db.VarChar(50)
+  duration   Int
+  postDate   DateTime
+  expiryDate DateTime
+  location   String   @db.VarChar(255)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  isDeleted  Boolean  @default(false)
+  postedBy   User     @relation(fields: [postedById], references: [id])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  message   String
+  sentDate  DateTime @default(now())
+  isDeleted Boolean  @default(false)
+  users     User[]   @relation("NotificationToUser")
+}
+
+model Checkpoint {
+  id        Int      @id @default(autoincrement())
+  longitude Float
+  latitude  Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+  users     User[]   @relation("CheckpointToUser")
+}
+
 enum UserRole {
   ADMIN
   VEHICLE_MANAGER
@@ -28,161 +174,4 @@ enum ProductCategory {
   VEHICLES
   MACHINERY
   MISCELLANEOUS
-}
-
-model User {
-  id             Int        @id @default(autoincrement())
-  username       String     @unique @db.VarChar(50)
-  password       String     @db.VarChar(255)
-  email          String     @unique @db.VarChar(100)
-  fullName       String?    @db.VarChar(100)
-  address        String?    @db.VarChar(255)
-  phoneNumber    String?    @db.VarChar(20)
-  roles          UserRole[]
-  kycVerified    Boolean    @default(false)
-  profilePicture String?    @db.VarChar(255)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-
-  kycDocuments     KnowYourCustomer[]
-  donations        Donation[]           @relation("UserDonations")
-  claimedDonations Donation[]           @relation("UserClaims")
-  posts            Post[]
-  requests         Request[]
-  participations   FundingParticipant[]
-  commerceProducts CommerceProduct[]
-  scrapProducts    ScrapProduct[]
-  notifications    Notification[]
-  checkpoints      Checkpoint[]
-}
-
-model KnowYourCustomer {
-  id                   Int          @id @default(autoincrement())
-  documentType         DocumentType
-  identificationNumber String       @unique @db.VarChar(50)
-  picture              String       @db.VarChar(255)
-  userId               Int
-  user                 User         @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  createdBy String?  @db.VarChar(50)
-  updatedBy String?  @db.VarChar(50)
-}
-
-model ScrapProduct {
-  id       Int    @id @default(autoincrement())
-  type     String @db.VarChar(100)
-  price    Float
-  details  String @db.Text
-  image    String @db.VarChar(255)
-  dealerId Int
-  dealer   User   @relation(fields: [dealerId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-}
-
-model Donation {
-  id        Int             @id @default(autoincrement())
-  name      String          @db.VarChar(255)
-  donatorId Int
-  donator   User            @relation("UserDonations", fields: [donatorId], references: [id])
-  image     String          @db.VarChar(255)
-  details   String          @db.Text
-  claimerId Int?
-  claimer   User?           @relation("UserClaims", fields: [claimerId], references: [id])
-  category  ProductCategory
-  location  String          @db.VarChar(255)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-}
-
-model Post {
-  id          Int      @id @default(autoincrement())
-  authorId    Int
-  author      User     @relation(fields: [authorId], references: [id])
-  title       String   @db.VarChar(255)
-  description String   @db.Text
-  content     String   @db.Text
-  tags        String[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-}
-
-model Request {
-  id             Int                  @id @default(autoincrement())
-  title          String               @db.VarChar(255)
-  requesterId    Int
-  requester      User                 @relation(fields: [requesterId], references: [id])
-  description    String               @db.Text
-  participations FundingParticipant[]
-  goal           Float
-  date           DateTime
-  duration       Int
-  location       String               @db.VarChar(255)
-  totalAmount    Float                @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-}
-
-model FundingParticipant {
-  id        Int     @id @default(autoincrement())
-  requestId Int
-  request   Request @relation(fields: [requestId], references: [id])
-  userId    Int
-  user      User    @relation(fields: [userId], references: [id])
-  amount    Float
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model CommerceProduct {
-  id         Int      @id @default(autoincrement())
-  title      String   @db.VarChar(255)
-  details    String   @db.Text
-  image      String   @db.VarChar(255)
-  price      Float
-  postedById Int
-  postedBy   User     @relation(fields: [postedById], references: [id])
-  status     String   @db.VarChar(50)
-  duration   Int
-  postDate   DateTime
-  expiryDate DateTime
-  location   String   @db.VarChar(255)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-}
-
-model Notification {
-  id       Int      @id @default(autoincrement())
-  title    String   @db.VarChar(255)
-  message  String   @db.Text
-  sentDate DateTime @default(now())
-  users    User[]
-
-  isDeleted Boolean @default(false)
-}
-
-model Checkpoint {
-  id        Int    @id @default(autoincrement())
-  longitude Float
-  latitude  Float
-  users     User[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
 }
