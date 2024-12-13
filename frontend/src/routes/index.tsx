@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import { BlogRoutes } from "@/modules/blogs";
 import Homepage from "@/modules/Homepage";
 // import LoginForm from "@/modules/auth/Login";
 // import RegisterForm from "@/modules/auth/Register";
@@ -35,7 +36,7 @@ const routes = [
       {
         path: "/blogs",
         element: <Outlet />,
-        children: [], // BlogRoutes,
+        children: BlogRoutes, // BlogRoutes,
       },
       {
         path: "/tutorials",
