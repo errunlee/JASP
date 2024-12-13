@@ -18,7 +18,7 @@ function ThemeToggle() {
 				<Button
 					variant="outline"
 					size="icon"
-					className="dark:text-slate-100 dark:border-emerald-200 dark:hover:text-emerald-300
+					className="dark:text-slate-100 dark:border-slate-50 dark:hover:text-emerald-300
 			    dark:hover:border-slate-100 "
 				>
 					<Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

@@ -14,10 +14,6 @@ const Navbar = () => {
 
 	const navLinks = [
 		{
-			name: 'Home',
-			to: '/'
-		},
-		{
 			name: 'About',
 			to: '/about'
 		},
@@ -48,7 +44,7 @@ const Navbar = () => {
 				<NavLink
 					to={'/'}
 					className={`flex items-center space-x-2 ${
-						isHomepage ? 'text-white' : 'text-emerald-400'
+						isHomepage ? 'text-white' : 'text-black dark:text-white'
 					}`}
 				>
 					<div className="h-8 w-8  bg-secondary  rounded-full flex items-center justify-center text-xl font-bold">
