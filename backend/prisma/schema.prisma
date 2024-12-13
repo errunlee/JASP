@@ -31,6 +31,7 @@ model User {
   scrapProducts    ScrapProduct[]
   checkpoints      Checkpoint[]         @relation("CheckpointToUser")
   notifications    Notification[]       @relation("NotificationToUser")
+  UserCampaign     UserCampaign[]
 }
 
 model KnowYourCustomer {
@@ -95,7 +96,7 @@ model Request {
   description    String
   goal           Float
   date           DateTime
-  duration       Int
+duration       Int
   location       String               @db.VarChar(255)
   totalAmount    Float                @default(0)
   createdAt      DateTime             @default(now())
@@ -103,6 +104,20 @@ model Request {
   isDeleted      Boolean              @default(false)
   participations FundingParticipant[]
   requester      User                 @relation(fields: [requesterId], references: [id])
+  UserCampaign   UserCampaign[]
+}
+
+model UserCampaign {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  requestId Int
+  joinedAt  DateTime @default(now())
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id])
+  request Request @relation(fields: [requestId], references: [id])
+
+  @@unique([userId, requestId]) // Prevent duplicate entries
 }
 
 model FundingParticipant {

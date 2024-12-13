@@ -1,8 +1,14 @@
 import express from 'express';
 import MainRouter from './routes/0.index';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(
+	cors({
+		origin: '*'
+	})
+);
 
 app.use('/api', MainRouter);
 require('./config/configs');
