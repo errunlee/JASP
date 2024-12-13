@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"name": "Christmas Tree",
+		"price": 200,
+		"imgUrl": "/img/cardboard_christmas.jpeg",
+		"description": "A christmas tree made with cardboard",
+		"stock": 5
+	},
+	{
+		"id": 2,
+		"name": "Keychain",
+		"price": 200,
+		"imgUrl": "/img/keychain.webp",
+		"description": "Happy looking keychains with emoji-like face",
+		"stock": 0
+	},
+	{
+		"id": 3,
+		"name": "Vase",
+		"price": 200,
+		"imgUrl": "/img/vase.jpeg",
+		"description": "A transparent plant vase with a hook attached to suspend it in the air",
+		"stock": 10
+	}
+]
