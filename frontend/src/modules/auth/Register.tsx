@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SelectElement from "@/components/ui/select";
 import { register } from "@/lib/utils";
 import { RegisterProps } from "@/lib/utils";
+import Overlay from "@/components/Overlay";
 const roles = [
   {
     label: "Regular User",
@@ -65,12 +66,14 @@ const RegisterForm = () => {
     resolver: zodResolver(User),
   });
 
-  const onSubmit = (value: RegisterProps) => {
-    register(value)
+  const onSubmit = async (value: RegisterProps) => {
+    await register(value);
   };
 
   return (
     <Form {...form}>
+      {form.formState.isSubmitting && <Overlay />}
+
       <div className="flex min-h-screen items-center justify-center bg-background -mt-16 text-primary">
         <form
           onSubmit={form.handleSubmit(onSubmit)}

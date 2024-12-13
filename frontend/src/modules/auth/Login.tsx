@@ -5,7 +5,8 @@ import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
-import {login, LoginProps} from "@/lib/utils";
+import { login, LoginProps } from "@/lib/utils";
+import Overlay from "@/components/Overlay";
 const LoginForm = () => {
   const User = z.object({
     email: z.string().email({ message: "Invalid email address" }),
@@ -26,11 +27,13 @@ const LoginForm = () => {
     resolver: zodResolver(User),
   });
 
-  const onSubmit = (value: LoginProps) => {
-    login(value)
+  const onSubmit = async (value: LoginProps) => {
+    await login(value);
   };
+
   return (
     <Form {...form}>
+      {form.formState.isSubmitting && <Overlay />}
       <div className="flex min-h-screen items-center justify-center bg-background -mt-16  text-primary">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
