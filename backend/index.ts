@@ -1,4 +1,5 @@
 import MainRouter from './routes/0.index';
+import express from "express";
 
 const app = express();
 app.use(express.json());    
