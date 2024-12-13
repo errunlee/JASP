@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Layout";
 import LoginForm from "@/modules/auth/Login";
 import RegisterForm from "@/modules/auth/Register";
 import { BlogRoutes } from "@/modules/blogs";
+import { CampaignRoutes } from "@/modules/crowdfunding";
 import Homepage from "@/modules/Homepage";
 import { StoreRoutes } from "@/modules/store";
 import { TutorialsRoutes } from "@/modules/tutorials";
@@ -56,7 +57,7 @@ const routes = [
       {
         path: "/campaigns",
         element: <Outlet />,
-        children: [], // CampaignRoutes,
+        children: CampaignRoutes, // CampaignRoutes,
       },
     ],
   },
