@@ -4,6 +4,7 @@ import RegisterForm from "@/modules/auth/Register";
 import { BlogRoutes } from "@/modules/blogs";
 import { CampaignRoutes } from "@/modules/crowdfunding";
 import Homepage from "@/modules/Homepage";
+import { ScrapDealersRoutes } from "@/modules/scrap";
 import { StoreRoutes } from "@/modules/store";
 import { TutorialsRoutes } from "@/modules/tutorials";
 import { VehiclesRoutes } from "@/modules/vehicle";
@@ -64,7 +65,11 @@ const routes = [
         path: "/vehicle",
         element: <Outlet />,
         children: VehiclesRoutes,
-      },
+      },{
+        path: "/scraps",
+        element: <Outlet/>,
+        children: ScrapDealersRoutes
+      }
     ],
   },
 ];
