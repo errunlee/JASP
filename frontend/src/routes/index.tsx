@@ -1,8 +1,10 @@
+
 import Layout from '@/components/layout/Layout';
 import { BlogRoutes } from '@/modules/blogs';
 import Homepage from '@/modules/Homepage';
 import { StoreRoutes } from '@/modules/store';
 import { TutorialsRoutes } from '@/modules/tutorials';
+
 // import LoginForm from "@/modules/auth/Login";
 // import RegisterForm from "@/modules/auth/Register";
 // import { BlogRoutes } from "@/modules/blogs";
@@ -10,26 +12,26 @@ import { TutorialsRoutes } from '@/modules/tutorials';
 // import Homepage from "@/modules/pages/Homepage";
 // import { StoreRoutes } from "@/modules/store";
 // import { TutorialsRoutes } from "@/modules/tutorials";
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from "react-router-dom";
 
 const routes = [
-	{
-		path: '/',
-		element: <Layout />,
-		children: [
-			{
-				index: true,
-				element: <Homepage />
-			},
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Homepage />,
+      },
 
-			{
-				path: '/about',
-				element: <p>about</p>
-			},
-			{
-				path: '/Login',
-				element: <p>Login</p>
-			},
+      {
+        path: "/about",
+        element: <p>about</p>,
+      },
+      {
+        path: "/Login",
+        element: <p>Login</p>,
+      },
 
 			{
 				path: '/register',
