@@ -14,3 +14,12 @@ export const findCheckpointByGeoSpatialCoor = async (latitude : number,longitude
 export const findAllCheckpoints = async () => {
     return await prisma.checkpoint.findMany();
 };
+
+export const saveCheckpoint = async(latitude:number,longitude:number) => {
+    return await prisma.checkpoint.create({
+        data : {
+            latitude,
+            longitude 
+        }
+    })
+}
