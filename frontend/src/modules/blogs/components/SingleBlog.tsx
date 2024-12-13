@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+// import { getBlogById } from "../utils/getBlogs";
 
 type Blog = {
   id: number;
@@ -19,7 +20,8 @@ type Props = {
 };
 
 const SingleBlog = ({ blog }: Props) => {
-  return (
+  
+  return ( 
     <div
       key={blog.id}
       className="bg-white dark:bg-gray-900 border border-emerald-700 dark:border-emerald-600 rounded-lg shadow-md shadow-emerald-700 overflow-hidden"
