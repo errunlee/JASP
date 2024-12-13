@@ -29,11 +29,13 @@ export const register = async (req: Request, res: Response) => {
             data : user,
         })
     } catch (error) {
-        sendError(res, {
-            code : 500,
-            message : "Internal server error",
-            description : error.message
-        })
+        if(error instanceof Error) {
+            sendError(res, {
+                code : 500,
+                message : "Internal server error",
+                description : error.message
+            })
+        }
     }
 };
 
@@ -70,10 +72,13 @@ export const login: any = async (req: Request, res: Response) => {
             }
         })
     } catch (error) {
-        sendError(res, {
-            code : 500,
-            message : "Internal server error",
-            description : error.message
-        })
+        if(error instanceof Error) {
+            sendError(res, {
+                code : 500,
+                message : "Internal server error",
+                description : error.message
+            })
+        }
+
     }
 };

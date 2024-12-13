@@ -1,13 +1,12 @@
-import MainRouter from './routes/0.index';
 import express from "express";
+import MainRouter from "./routes/0.index";
 
 const app = express();
 app.use(express.json());    
 
-const route = express.Router();
-route.use('/api', MainRouter);
-
+app.use('/api', MainRouter);
 require("./config/configs");
+
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;

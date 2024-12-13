@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import admin from "firebase-admin";
+// import admin from "firebase-admin";
 import { findUserById } from "./user.service";
 import { twilioClient } from '../config/configs';
 import Queue from "bull";
@@ -22,28 +22,33 @@ async function sendSMS(to : string, message :string) {
   await twilioClient.messages.create({ body: message, from: process.env.TWILIO_PHONE, to });
 }
 
-async function sendPushNotification(token :string , title :string, body :string) {
-  await admin.messaging().send({
-    token,
-    notification: { title, body },
-  });
-}
+// async function sendPushNotification(token :string , title :string, body :string) {
+//   await admin.messaging().send({
+//     token,
+//     notification: { title, body },
+//   });
+// }
 
 
 async function notify(userId : number, message : NotifMessage) {
   const user = await findUserById(userId);
   //if (user.preferences.email) 
+    if(!user) {
+        throw new Error(`User with userId ${userId} Not found`);
+    }
     await sendEmail(user.email, message.title, message.body);
   //if (user.preferences.sms) 
-    await sendSMS(user.phone, message.body);
-  //if (user.preferences.push) 
-    await sendPushNotification(user.pushToken, message.title, message.body);
+    if(user.phoneNumber!=null)
+      await sendSMS(user.phoneNumber, message.body);
+  //if (user.preferences.push)
+    // const pushToken = "" //user.pushToken
+    // await sendPushNotification(pushToken, message.title, message.body);
 }
 
 const notificationQueue = new Queue('notifications',{
     redis : {
-        host : process.env.REDIS_HOST,
-        port : process.env.REDIS_PORT
+        host : "127.0.0.1",
+        port : 6379
     }
 })
 
