@@ -82,6 +82,7 @@ model Post {
   title       String   @db.VarChar(255)
   description String
   content     String
+  image       String
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -96,7 +97,7 @@ model Request {
   description    String
   goal           Float
   date           DateTime
-duration       Int
+  duration       Int
   location       String               @db.VarChar(255)
   totalAmount    Float                @default(0)
   createdAt      DateTime             @default(now())
