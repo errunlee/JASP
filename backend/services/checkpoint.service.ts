@@ -10,3 +10,7 @@ export const findCheckpointByGeoSpatialCoor = async (latitude : number,longitude
         }
     });
 };
+
+export const findAllCheckpoints = async () => {
+    return await prisma.checkpoint.findMany();
+};
