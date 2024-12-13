@@ -8,7 +8,7 @@ const Navbar = () => {
 	const location = useLocation();
 
 	// Determine text color based on route
-	const textColor = location.pathname === '/' ? 'text-white' : 'text-black';
+	// const textColor = location.pathname === '/' ? 'text-white' : 'text-black';
 
 	const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
