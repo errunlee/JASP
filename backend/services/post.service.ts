@@ -25,17 +25,25 @@ export async function getPostById(postId: number): Promise<Post | null> {
 }
 
 // Create a new post
-export async function createPost(postData: Post): Promise<Post> {
-	const newPost = await prisma.post.create({
+export const createPost = async (postData: {
+		authorId: number,
+		title: string,
+		content: string,
+		description: string,
+		tags: string[],
+		image: string
+	}
+) => {
+	return await prisma.post.create({
 		data: {
 			authorId: postData.authorId,
 			title: postData.title,
 			content: postData.content,
 			description: postData.description,
-			tags: postData.tags
+			tags: postData.tags,
+			image: postData.image
 		}
 	});
-	return newPost;
 }
 
 // Update a post by ID

@@ -83,7 +83,18 @@ export const getById = async (req: Request, res: Response) => {
 // Create a new post
 export const create = async (req: Request, res: Response) => {
 	try {
-		const newPost = await createPost(req.body);
+		const { authorId, title, content, description, tags } = req.body;
+		const file = req.file as Express.Multer.File;
+		console.log(req.file);
+		console.log(req.body);
+		const newPost = await createPost({
+			authorId,
+			title,
+			content,
+			description,
+			tags,
+			image: file.path
+		});
 		return sendResponse(res, {
 			code: 200,
 			message: 'Post created successfully',
