@@ -21,7 +21,7 @@ type Props = {
 
 const BlogDetailsPage = ({ blog = blogs[0] }: Props) => {
   return (
-    <div className="font-openSans max-w-3xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+    <div className="font-openSans max-w-3xl mx-auto bg-white  dark:bg-gray-900 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
       {/* Blog Image */}
       {blog.image && (
         <img

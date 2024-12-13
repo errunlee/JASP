@@ -1,9 +1,10 @@
-
-import Layout from '@/components/layout/Layout';
-import { BlogRoutes } from '@/modules/blogs';
-import Homepage from '@/modules/Homepage';
-import { StoreRoutes } from '@/modules/store';
-import { TutorialsRoutes } from '@/modules/tutorials';
+import Layout from "@/components/layout/Layout";
+import LoginForm from "@/modules/auth/Login";
+import RegisterForm from "@/modules/auth/Register";
+import { BlogRoutes } from "@/modules/blogs";
+import Homepage from "@/modules/Homepage";
+import { StoreRoutes } from "@/modules/store";
+import { TutorialsRoutes } from "@/modules/tutorials";
 
 // import LoginForm from "@/modules/auth/Login";
 // import RegisterForm from "@/modules/auth/Register";
@@ -30,35 +31,35 @@ const routes = [
       },
       {
         path: "/Login",
-        element: <p>Login</p>,
+        element: <LoginForm />,
       },
 
-			{
-				path: '/register',
-				element: <p>register</p>
-			},
-			{
-				path: '/blogs',
-				element: <Outlet />,
-				children: BlogRoutes // BlogRoutes,
-			},
-			{
-				path: '/tutorials',
-				element: <Outlet />,
-				children: TutorialsRoutes // TutorialsRoutes,
-			},
-			{
-				path: '/store',
-				element: <Outlet />,
-				children: StoreRoutes // StoreRoutes,
-			},
-			{
-				path: '/campaigns',
-				element: <Outlet />,
-				children: [] // CampaignRoutes,
-			}
-		]
-	}
+      {
+        path: "/register",
+        element: <RegisterForm />,
+      },
+      {
+        path: "/blogs",
+        element: <Outlet />,
+        children: BlogRoutes, // BlogRoutes,
+      },
+      {
+        path: "/tutorials",
+        element: <Outlet />,
+        children: TutorialsRoutes, // TutorialsRoutes,
+      },
+      {
+        path: "/store",
+        element: <Outlet />,
+        children: StoreRoutes, // StoreRoutes,
+      },
+      {
+        path: "/campaigns",
+        element: <Outlet />,
+        children: [], // CampaignRoutes,
+      },
+    ],
+  },
 ];
 
 export const router = createBrowserRouter(routes);

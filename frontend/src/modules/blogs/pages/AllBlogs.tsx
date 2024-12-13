@@ -3,7 +3,7 @@ import { blogs } from "./tempBlogs";
 
 const BlogList = () => {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-8 md:px-10 px-5">
+    <div className="min-h-screen  dark:bg-gray-900 py-8 md:px-10 px-5 ">
       <h1 className="text-3xl font-roboto tracking-wider font-bold text-center mb-6 text-emerald-600 dark:text-emerald-400">
         Featured Blogs
       </h1>
