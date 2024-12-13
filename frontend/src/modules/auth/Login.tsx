@@ -5,6 +5,7 @@ import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
+import {login, LoginProps} from "@/lib/utils";
 const LoginForm = () => {
   const User = z.object({
     email: z.string().email({ message: "Invalid email address" }),
@@ -25,8 +26,8 @@ const LoginForm = () => {
     resolver: zodResolver(User),
   });
 
-  const onSubmit = () => {
-    console.log("object");
+  const onSubmit = (value: LoginProps) => {
+    login(value)
   };
   return (
     <Form {...form}>

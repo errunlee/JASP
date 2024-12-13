@@ -6,7 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import SelectElement from "@/components/ui/select";
-
+import { register } from "@/lib/utils";
+import { RegisterProps } from "@/lib/utils";
 const roles = [
   {
     label: "Regular User",
@@ -64,8 +65,8 @@ const RegisterForm = () => {
     resolver: zodResolver(User),
   });
 
-  const onSubmit = () => {
-    console.log("Registering user...");
+  const onSubmit = (value: RegisterProps) => {
+    register(value)
   };
 
   return (

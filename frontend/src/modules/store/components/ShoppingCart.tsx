@@ -29,7 +29,7 @@ export default function ShoppingCart({ isOpen }: ShoppingCartProps) {
 				onClick={openCart}
 				className="absolute top-24 right-4 lg:right-6 w-16 h-16 bg-transparent border-none outline-none shadow-none hover:bg-transparent hover:shadow-none z-1 "
 			>
-				<Button className="dark hover:bg-transparent hover:outline-none dark:bg-black dark:hover:bg-black focus:outline-none">
+				<Button className="dark hover:bg-transparent hover:outline-none dark:bg-transparent dark:hover:bg-transparent focus:outline-none">
 					<VisuallyHidden>Open Cart </VisuallyHidden>
 				</Button>
 			</SheetTrigger>

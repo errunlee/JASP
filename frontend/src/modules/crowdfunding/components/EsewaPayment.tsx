@@ -15,7 +15,7 @@ const EsewaPaymentForm = ({
   errorMessage: string | null;
 }) => {
   const formRef = useRef<HTMLFormElement>(null);
-  debugger;
+  
   const handleDonate = () => {
     const confirm = window.confirm(
       "Are you sure you want to donate this amount?"
