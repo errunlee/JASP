@@ -25,9 +25,15 @@ export async function getPostById(postId: number): Promise<Post | null> {
 }
 
 // Create a new post
-export async function createPost(postData: any): Promise<Post> {
+export async function createPost(postData: Post): Promise<Post> {
 	const newPost = await prisma.post.create({
-		data: postData
+		data: {
+			authorId: postData.authorId,
+			title: postData.title,
+			content: postData.content,
+			description: postData.description,
+			tags: postData.tags
+		}
 	});
 	return newPost;
 }
@@ -39,7 +45,13 @@ export async function updatePost(
 ): Promise<Post | null> {
 	const updatedPost = await prisma.post.update({
 		where: { id: postId },
-		data: postData
+		data: {
+			authorId: postData.authorId,
+			title: postData.title,
+			content: postData.content,
+			description: postData.description,
+			tags: postData.tags
+		}
 	});
 	return updatedPost;
 }

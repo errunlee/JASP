@@ -1,13 +1,15 @@
 import Router from 'express';
 import NotifRouter from './notif.route';
 import PostRouter from './post.route';
+import AuthRouter from './auth.route';
 
 import { sendResponse } from '../utils/GenericResponse';
 
 const router = Router();
 
 router.use('', NotifRouter);
-router.use('', PostRouter);
+router.use('/blog', PostRouter);
+router.use('/auth', AuthRouter);
 
 router.get('/ping', (req, res) => {
 	sendResponse(res, {
