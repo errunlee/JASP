@@ -13,7 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@prisma/client": "^5.22.0",
+        "@prisma/client": "^6.0.1",
         "backend": "file:",
         "bcryptjs": "^2.4.3",
         "bull": "^4.16.4",
@@ -23,7 +23,6 @@
         "firebase-admin": "^13.0.1",
         "jsonwebtoken": "^9.0.2",
         "nodemailer": "^6.9.16",
-        "prisma": "^5.22.0",
         "redis": "^4.7.0",
         "twilio": "^5.3.7"
     },
@@ -35,6 +34,7 @@
         "@types/nodemailer": "^6.4.17",
         "joi": "^17.13.3",
         "nodemon": "^3.1.7",
+        "prisma": "^6.0.1",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.2"
     }

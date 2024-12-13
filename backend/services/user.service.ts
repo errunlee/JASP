@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export const createUser = async (data: { username: string; email: string; password: string; roles? : UserRole[]})  => {
     const { username, email, password, roles } = data;
 
-    const userRoles = roles || [UserRole.REGULAR_USER];
+    const userRoles = [UserRole.REGULAR_USER,...roles ?? []];
 
     const newUser = await prisma.user.create({
         data: {
