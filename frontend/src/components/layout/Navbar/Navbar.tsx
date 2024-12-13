@@ -45,16 +45,19 @@ const Navbar = () => {
 		>
 			<nav className="container mx-auto flex justify-between items-center p-4">
 				{/* Logo Section */}
-				<div className="flex items-center space-x-2">
+				<NavLink
+					to={'/'}
+					className={`flex items-center space-x-2 ${
+						isHomepage ? 'text-white' : 'text-emerald-400'
+					}`}
+				>
 					<div className="h-8 w-8  bg-secondary  rounded-full flex items-center justify-center text-xl font-bold">
 						L
 					</div>
-					<span
-						className={`text-xl  font-semibold tracking-wider ${textColor}`}
-					>
+					<span className={`text-xl  font-semibold tracking-wider  `}>
 						Trashformers
 					</span>
-				</div>
+				</NavLink>
 
 				<section className="flex gap-7">
 					{/* Navigation Links */}
@@ -74,7 +77,7 @@ const Navbar = () => {
             justify-center md:justify-between
             items-center space-y-8 md:space-y-0
             p-8 md:p-0
-            z-30 md:z-0
+            z-30 md:z-0 text-white
             ${
 							isHomepage
 								? 'md:text-white'
