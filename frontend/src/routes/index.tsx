@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import Homepage from "@/modules/Homepage";
 // import LoginForm from "@/modules/auth/Login";
 // import RegisterForm from "@/modules/auth/Register";
 // import { BlogRoutes } from "@/modules/blogs";
@@ -15,7 +16,7 @@ const routes = [
     children: [
       {
         index: true,
-        element: <p>Homepage</p>,
+        element: <Homepage />,
       },
 
       {
