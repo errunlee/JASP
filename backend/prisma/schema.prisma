@@ -31,6 +31,7 @@ model User {
   scrapProducts    ScrapProduct[]
   checkpoints      Checkpoint[]         @relation("CheckpointToUser")
   notifications    Notification[]       @relation("NotificationToUser")
+  UserCampaign     UserCampaign[]
 }
 
 model KnowYourCustomer {
@@ -81,6 +82,7 @@ model Post {
   title       String   @db.VarChar(255)
   description String
   content     String
+  image       String
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -103,6 +105,20 @@ model Request {
   isDeleted      Boolean              @default(false)
   participations FundingParticipant[]
   requester      User                 @relation(fields: [requesterId], references: [id])
+  UserCampaign   UserCampaign[]
+}
+
+model UserCampaign {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  requestId Int
+  joinedAt  DateTime @default(now())
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id])
+  request Request @relation(fields: [requestId], references: [id])
+
+  @@unique([userId, requestId]) // Prevent duplicate entries
 }
 
 model FundingParticipant {

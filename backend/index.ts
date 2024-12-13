@@ -2,8 +2,7 @@ import express from "express";
 import MainRouter from "./routes/0.index";
 import http from "http";
 import { findUserById } from "./services/user.service";
-import { Console } from "console";
-
+import cors from "cors";
 
 const socketio = require("socket.io");
 
@@ -11,14 +10,19 @@ const socketio = require("socket.io");
 
 const app = express();
 app.use(express.json());    
+app.use(
+	cors({
+		origin: '*'
+	})
+);
 app.use(express.urlencoded({extended:true}));
 app.use('/api', MainRouter);
 
 require("./config/configs");
 
-require("dotenv").config();
+require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
+const PORT: number = parseInt(process.env.PORT || '3000', 10);
 
 
 const server = http.createServer(app);
@@ -55,6 +59,6 @@ io.on("connection", async (socket:any)=> {
   })
 })
 
-server.listen(PORT,() => {
+server.listen(PORT,"0.0.0.0",() => {
   console.log(`Server is running on port ${PORT}`);
 });
