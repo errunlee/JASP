@@ -35,18 +35,27 @@ const io = socketio(server, {
 
 app.set("view engine","ejs");
 
+
+
 io.on("connection", async (socket:any)=> {
   console.log("driver connected");
+
+  setTimeout(()=> {
+    console.log("set timeout");
+    io.emit("sumit","Hello arun how are you");
+  },2000)
+
   socket.on("test",(data :any)=> {
-    console.log(data)
+    console.log("test event"+data)
   })
+
   socket.on("truckDriversLocation",async (data : {
     longitude : number,
     latitude : number,
     userId : number,
   })=> {
     //verify if the user is Driver
-    console.log("hello bitch whast up");
+    console.log("hello ");
     console.log(data);
     const user = await findUserById(data.userId);
     if(!user) return;

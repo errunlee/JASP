@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient,ProductCategory } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -18,10 +18,12 @@ export const findCheckpointByGeoSpatialCoor = async (
 
 export const saveDonation = async (donation: {
   name: string
-  donatorId: string
+  donatorId: number
   image: string
   details: string
   location: string
+  category: ProductCategory
+
 }) => {
   return await prisma.donation.create({
     data: {
@@ -29,7 +31,8 @@ export const saveDonation = async (donation: {
       donatorId: donation.donatorId,
       image: donation.image,
       details: donation.details,
-      location: donation.location
+      location: donation.location,
+      category : donation.category
     }
   })
 }
@@ -81,16 +84,10 @@ export const claimDonation = async (donation : {id : number, claimerId : number}
 
 
 
-export const findAllDonations = async (donation : {category :string }) =>{
+export const findAllDonations = async (donation : {category :ProductCategory }) =>{
   return await prisma.donation.findMany({
     where : {
-      AND : [
-       { 
-          category : {
-            contains: donation.category
-          }
-        }
-      ]
+      category: donation.category
     }
 })
 }

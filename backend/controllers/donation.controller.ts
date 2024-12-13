@@ -1,17 +1,22 @@
 import { Request,Response } from "express";
 import { sendError } from "../utils/GenericErrorResponse"
-import { sendResponse } from "../utils/GenericResponse";
 import donationService from "../services/donation.service";
+import { sendResponse } from "../utils/GenericResponse";
 
 export const createDonation = async (req: Request,res : Response)=> {
    try {
-        const {name,donatorId,file,details,location} = req.body;
+        const {name,donatorId,file,details,location,category} = req.body;
         const donation = await donationService.saveDonation({
             name,
             donatorId,
             image : file.path,
             details,
-            location
+            location,
+            category
+        })
+        sendResponse(res, {
+            code : 201,
+            message : "Resource Sucessfully Created"
         })
     }catch(err) {
         sendError(res,{
@@ -22,7 +27,7 @@ export const createDonation = async (req: Request,res : Response)=> {
 
 export const updateDonation = async (req : Request, res : Response) => {
     try {
-        const {id,name,file,details,location} = req.body;
+        const id = parseInt(req.params.id,10);
         if(!id) {
             sendError(res,{
                 code : 400,
@@ -42,6 +47,10 @@ export const updateDonation = async (req : Request, res : Response) => {
         const donation = await donationService.updateDonation({
             ...obj
         })
+        sendResponse(res, {
+            code : 200,
+            message : "Resource Sucessfully Updated"
+        })
     }catch(err) {
         sendError(res,{
             message : err instanceof Error ? err.message: typeof err=="string"?err:""
@@ -52,7 +61,7 @@ export const updateDonation = async (req : Request, res : Response) => {
 
 export const deleteDonation = async (req : Request, res : Response) => {
     try {
-        const {id} = req.body;
+        const id = parseInt(req.params.id,10);
         if(!id) {
             sendError(res,{
                 code : 400,
@@ -61,6 +70,10 @@ export const deleteDonation = async (req : Request, res : Response) => {
             return
         }
         const donation = await donationService.deleteDonation({id})
+        sendResponse(res, {
+            code : 200,
+            message : "Resource Sucessfully Deleted"
+        })
     }catch(err) {
         sendError(res,{
             message : err instanceof Error ? err.message: typeof err=="string"?err:""
@@ -71,7 +84,8 @@ export const deleteDonation = async (req : Request, res : Response) => {
 
 export const claimDonation = async (req : Request, res : Response) => {
     try {
-        const {id,claimerId} = req.body;
+        const id = parseInt(req.params.id,10);
+        const {claimerId} = req.body;
         if(!id) {
             sendError(res,{
                 code : 400,
@@ -88,6 +102,11 @@ export const claimDonation = async (req : Request, res : Response) => {
             return;
         }
         const donation = await donationService.claimDonation({id,claimerId})
+
+        sendResponse(res, {
+            code : 200,
+            message : "Resource Sucessfully Claimed"
+        })
     }catch(err) {
         sendError(res,{
             message : err instanceof Error ? err.message: typeof err=="string"?err:""
@@ -100,8 +119,15 @@ export const getDonations = async (req : Request, res : Response) => {
     try {
         const { category } = req.body;
 
-        const donatiosn = await donationService.findAllDonations({
+        const donation = await donationService.findAllDonations({
             category
+        })
+
+        
+        sendResponse(res, {
+            code : 200,
+            message : "Resource Sucessfully Claimed",
+            data : donation
         })
     }catch(err) {
         sendError(res,{
