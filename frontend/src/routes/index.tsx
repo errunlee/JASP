@@ -6,6 +6,7 @@ import { CampaignRoutes } from "@/modules/crowdfunding";
 import Homepage from "@/modules/Homepage";
 import { StoreRoutes } from "@/modules/store";
 import { TutorialsRoutes } from "@/modules/tutorials";
+import { VehiclesRoutes } from "@/modules/vehicle";
 
 // import LoginForm from "@/modules/auth/Login";
 // import RegisterForm from "@/modules/auth/Register";
@@ -58,6 +59,11 @@ const routes = [
         path: "/campaigns",
         element: <Outlet />,
         children: CampaignRoutes, // CampaignRoutes,
+      },
+      {
+        path: "/vehicle",
+        element: <Outlet />,
+        children: VehiclesRoutes,
       },
     ],
   },
