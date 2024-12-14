@@ -14,7 +14,7 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"], // Include these assets in the build
       manifest: {
         name: "Trashformers",
-        short_name: "T2F",
+        short_name: "Trashformers",
         description: "Trashformer Application for your daily use",
         theme_color: "#ffffff",
         icons: [
