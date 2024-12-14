@@ -3,6 +3,10 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Icon } from "leaflet";
 import { io, Socket } from "socket.io-client";
 import "leaflet/dist/leaflet.css";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/instance";
+import { Checkpoint } from "@/modules/auth/Register";
+import { useSendNotification } from "./useSendNotification";
 
 // Custom icon to distinguish different users
 const createCustomIcon = (isCurrentUser: boolean) =>
@@ -25,15 +29,24 @@ function App() {
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [currentUserId, setCurrentUserId] = useState<string>("");
 
+  const { data: checkpoints, isLoading: isCheckPointsLoading } = useQuery<
+    Checkpoint[]
+  >({
+    queryKey: ["checkpoints"],
+    queryFn: async () => {
+      const res = await api.get("/api/checkpoints");
+      return res.data.data;
+    },
+  });
+
   const user = localStorage.getItem("user");
   let role = "";
 
   if (user) {
-    role = JSON.parse(user).role[0];
+    role = JSON.parse(user).role;
   }
 
-  const isDriver = role === "VEHICLE_MANAGER";
-
+  const isDriver = role.includes("VEHICLE_MANAGER");
   // Establish socket connection
   useEffect(() => {
     const newSocket: any = io("https://locationtracking-oqi9.onrender.com", {
@@ -125,6 +138,11 @@ function App() {
       ? [markers[0].latitude, markers[0].longitude]
       : [27.68895, 85.343984]; // Default to Kathmandu if no markers
 
+  const { mutateAsync } = useSendNotification();
+
+  const handleSendNotification = async (checkpointId: number) => {
+    await mutateAsync(checkpointId);
+  };
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <p className="fixed top-[6rem] right-5 z-[2000] text-xl bg-black rounded-lg opacity-70 text-white p-2 px-4">
@@ -150,6 +168,33 @@ function App() {
             </Popup>
           </Marker>
         ))}
+
+        {checkpoints?.map((item) => {
+          return (
+            <Marker
+              position={[item.latitude, item.longitude]}
+              icon={
+                new Icon({
+                  iconUrl:
+                    "https://cdn-icons-png.flaticon.com/512/7311/7311720.png",
+                  iconSize: [60, 60],
+                })
+              }
+            >
+              <Popup className="flex flex-col gap-4">
+                <p className="flex flex-col">
+                  {item.name}
+                  <button
+                    onClick={() => handleSendNotification(item.id)}
+                    className="bg-green-500 text-white rounded-md p-2"
+                  >
+                    Send notificatoin
+                  </button>
+                </p>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );
