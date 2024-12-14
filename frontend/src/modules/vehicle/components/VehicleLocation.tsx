@@ -43,8 +43,8 @@ function App() {
   if (user) {
     role = JSON.parse(user).role;
   }
-
-  const isDriver = role.includes("VEHICLE_MANAGER");
+  // @ts-ignore
+  const isDriver = !!role.find((r: string) => r === "VEHICLE_MANAGER");
   // Establish socket connection
   useEffect(() => {
     const newSocket: any = io("https://locationtracking-oqi9.onrender.com", {
@@ -167,32 +167,33 @@ function App() {
           </Marker>
         ))}
 
-        {checkpoints?.map((item) => {
-          return (
-            <Marker
-              position={[item.latitude, item.longitude]}
-              icon={
-                new Icon({
-                  iconUrl:
-                    "https://cdn-icons-png.flaticon.com/512/7311/7311720.png",
-                  iconSize: [60, 60],
-                })
-              }
-            >
-              <Popup className="flex flex-col gap-4">
-                <p className="flex flex-col">
-                  {item.name}
-                  <button
-                    onClick={() => handleSendNotification(item.id)}
-                    className="bg-green-500 text-white rounded-md p-2"
-                  >
-                    Send notificatoin
-                  </button>
-                </p>
-              </Popup>
-            </Marker>
-          );
-        })}
+        {isDriver &&
+          checkpoints?.map((item) => {
+            return (
+              <Marker
+                position={[item.latitude, item.longitude]}
+                icon={
+                  new Icon({
+                    iconUrl:
+                      "https://cdn-icons-png.flaticon.com/512/7311/7311720.png",
+                    iconSize: [60, 60],
+                  })
+                }
+              >
+                <Popup className="flex flex-col gap-4">
+                  <p className="flex flex-col">
+                    {item.name}
+                    <button
+                      onClick={() => handleSendNotification(item.id)}
+                      className="bg-green-500 text-white rounded-md p-2"
+                    >
+                      Send notificatoin
+                    </button>
+                  </p>
+                </Popup>
+              </Marker>
+            );
+          })}
       </MapContainer>
     </div>
   );

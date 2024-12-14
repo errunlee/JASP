@@ -103,7 +103,13 @@ const RegisterForm = () => {
     //@ts-ignore
     value.checkpointId = value.checkpoint;
     //@ts-ignore
-    value.roles = [value.roles];
+    if (value.roles.trim() != "") {
+      // @ts-ignore
+      value.roles = [value.roles];
+    } else {
+      // @ts-ignore
+      delete value.roles;
+    }
     await register(value, navigate);
   };
   return (
