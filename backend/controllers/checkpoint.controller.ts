@@ -56,3 +56,18 @@ export const saveCheckpoint = async(req : Request, res : Response) => {
     }
 }
 
+export const getAllCheckpoints = async (req:Request, res:Response) => {
+    try {
+        const checkpoints = await findAllCheckpoints();
+        sendResponse(res, {
+            code: 200,
+            message: "All Checkpoints",
+            data: checkpoints
+        })
+    } catch (error) {
+        sendError(res, {
+            code: 500,
+            message: error instanceof Error ? error.message : typeof error == "string" ? error : ""
+        })
+    }
+}

@@ -1,10 +1,12 @@
 import Router from "express";
-import { getCheckpoints,saveCheckpoint } from "../controllers/checkpoint.controller";
+import { getCheckpoints,saveCheckpoint, getAllCheckpoints } from "../controllers/checkpoint.controller";
+import { isAdmin } from "../middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/",getCheckpoints);
-router.post("/",saveCheckpoint);
+router.get("/", isAdmin(), getCheckpoints);
+router.post("/", isAdmin(), saveCheckpoint);
+router.get("/dep", getAllCheckpoints);
 
 
 
