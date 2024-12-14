@@ -10,8 +10,9 @@ export const sendError = (res:Response,body : {
 },logMessge ?: string)=> {
     if(process.env.ENV=="DEV") {
         console.log(body.description);
-        console.log(logMessge)
     }
+    console.log(logMessge)
+
     res.status(body.code ?? 400).json({
         code : body.code,
         message : body.message,

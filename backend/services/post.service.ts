@@ -25,15 +25,17 @@ export async function getPostById(postId: number): Promise<Post | null> {
 }
 
 // Create a new post
-export async function createPost(postData: Post, file:any): Promise<Post> {
-	
+export async function createPost(postData :any, file:Express.Multer.File): Promise<Post> {
+	let authorId = typeof postData.authorId=="number"?postData.authorId:parseInt(postData.authorId,10);
+
+	const tags = postData.tags.split(",");
 	const newPost = await prisma.post.create({
 		data: {
-			authorId: postData.authorId,
+			authorId,
 			title: postData.title,
 			content: postData.content,
 			description: postData.description,
-			tags: postData.tags,
+			tags,
 			image: file.path
 		}
 	});
