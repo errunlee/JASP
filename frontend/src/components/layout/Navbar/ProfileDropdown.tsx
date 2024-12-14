@@ -50,6 +50,12 @@ const ProfileDropdown = ({}: Props) => {
           navigate("/login");
         },
       },
+      {
+        label: "Register",
+        onclick: () => {
+          navigate("/register");
+        },
+      },
     ],
   };
 

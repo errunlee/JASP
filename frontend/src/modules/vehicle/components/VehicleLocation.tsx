@@ -44,7 +44,7 @@ function App() {
     role = JSON.parse(user).role;
   }
   // @ts-ignore
-  const isDriver = !!role.find((r: string) => r === "VEHICLE_MANAGER");
+  const isDriver = role && !!role.find((r: string) => r === "VEHICLE_MANAGER");
   // Establish socket connection
   useEffect(() => {
     const newSocket: any = io("https://locationtracking-oqi9.onrender.com", {
