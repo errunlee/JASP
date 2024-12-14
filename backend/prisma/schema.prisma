@@ -21,6 +21,8 @@ model User {
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
   isDeleted        Boolean              @default(false)
+  checkpointId    Int                   
+  pushTokens       String[]
   commerceProducts CommerceProduct[]
   claimedDonations Donation[]           @relation("UserClaims")
   donations        Donation[]           @relation("UserDonations")
@@ -29,7 +31,7 @@ model User {
   posts            Post[]
   requests         Request[]
   scrapProducts    ScrapProduct[]
-  checkpoints      Checkpoint[]         @relation("CheckpointToUser")
+  checkpoint     Checkpoint        @relation("CheckpointToUser",fields : [checkpointId],references : [id])
   notifications    Notification[]       @relation("NotificationToUser")
   UserCampaign     UserCampaign[]
 }

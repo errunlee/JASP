@@ -9,9 +9,9 @@ export const twilioClient = twilio(
   process.env.TWILIO_AUTH_TOKEN
 )
 
-// admin.initializeApp({
-//   credential: admin.credential.cert(require('./firebase-service-account.json')),
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(require('./firebase-service-account-conf.json')),
+});
 
 // multer configuration
 const storage: StorageEngine = multer.diskStorage({

@@ -20,18 +20,18 @@ async function main() {
         data: [
             {
                 name: "Lokanthali",
+                latitude: 85.359929,
                 longitude: 27.675253,
-                latitude: 85.359929
             },
             {
                 name: "Madhyapur Thimi",
+                latitude: 85.380945,
                 longitude: 27.676560,
-                latitude: 85.380945
             },
             {
                 name: "Gathaghar",
+                latitude: 85.373718,
                 longitude:27.675935,
-                latitude: 85.373718
             }
         ]
     })

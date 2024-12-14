@@ -24,5 +24,7 @@ export const sendError = (res:Response,body : {
 }
 
 export const logError  = (error : any)=> {
-    logger(LogType.ERROR,error instanceof Error ? error.message : typeof error == "string"?error:"Undefined Error")
+    const errMessage = error instanceof Error ? error.message : typeof error == "string"?error:"Undefined Error";
+    logger(LogType.ERROR,errMessage);
+    return errMessage;
 }

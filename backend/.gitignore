@@ -2,3 +2,5 @@ dist
 .env
 node_modules
 uploads/*
+
+config/firebase-service-account-conf.json
