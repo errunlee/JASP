@@ -38,53 +38,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("@prisma/client");
 var bcrypt_1 = require("bcrypt");
+// Initialize Prisma Client
 var prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var hashedPassword, admin, checkpoints;
+        var saltRounds, hashedPassword;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, bcrypt_1.default.hash("admin123", parseInt(process.env.BCRYPT_SALT_ROUNDS))];
+                case 0:
+                    saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS || "10", 10);
+                    return [4 /*yield*/, bcrypt_1.default.hash("password123", saltRounds)];
                 case 1:
                     hashedPassword = _a.sent();
-                    return [4 /*yield*/, prisma.user.create({
-                            data: {
-                                username: "Admin",
-                                email: "admin@gmail.com",
-                                password: hashedPassword,
-                            }
-                        })];
-                case 2:
-                    admin = _a.sent();
+                    // Seed Checkpoints
+                    console.log("Seeding checkpoints...");
                     return [4 /*yield*/, prisma.checkpoint.createMany({
                             data: [
                                 {
                                     name: "Lokanthali",
-                                    longitude: 27.675253,
-                                    latitude: 85.359929
+                                    longitude: 85.359929,
+                                    latitude: 27.675253,
                                 },
                                 {
                                     name: "Madhyapur Thimi",
-                                    longitude: 27.676560,
-                                    latitude: 85.380945
+                                    longitude: 85.380945,
+                                    latitude: 27.67656,
                                 },
                                 {
                                     name: "Gathaghar",
-                                    longitude: 27.675935,
-                                    latitude: 85.373718
-                                }
-                            ]
+                                    longitude: 85.373718,
+                                    latitude: 27.675935,
+                                },
+                            ],
+                            skipDuplicates: true, // Avoid inserting duplicates
                         })];
-                case 3:
-                    checkpoints = _a.sent();
+                case 2:
+                    _a.sent();
+                    // Seed Users
+                    console.log("Seeding users...");
                     return [2 /*return*/];
             }
         });
     });
 }
+// Execute main function
 main()
     .catch(function (e) {
-    console.error(e);
+    console.error("Error during seeding:", e);
     process.exit(1);
 })
     .finally(function () { return __awaiter(void 0, void 0, void 0, function () {

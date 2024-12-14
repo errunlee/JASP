@@ -8,10 +8,11 @@ import {
 import { PaginationParams } from '../interfaces/pagination-params.interface'
 import { logError } from '../utils/GenericErrorResponse'
 import { logger, LogType } from '../utils/logger'
+import { findUserById } from './user.service'
 
 const prisma = new PrismaClient()
 
-export async function getAllRequest ({
+async function getAllRequest ({
   page,
   limit
 }: PaginationParams): Promise<Request[]> {
@@ -23,7 +24,7 @@ export async function getAllRequest ({
   return requests
 }
 
-export async function getRequestById (
+async function getRequestById (
   requestId: number
 ): Promise<Request | null> {
   const request = await prisma.request.findUnique({
@@ -32,7 +33,7 @@ export async function getRequestById (
   return request
 }
 
-export async function createRequest (requestData: Request): Promise<Request> {
+async function createRequest (requestData: Request): Promise<Request> {
   const newRequest = await prisma.request.create({
     data: {
       title: requestData.title,
@@ -48,7 +49,7 @@ export async function createRequest (requestData: Request): Promise<Request> {
   return newRequest
 }
 
-export async function updateRequest (
+async function updateRequest (
   requestId: number,
   requestData: Partial<Request>
 ): Promise<Request | null> {
@@ -68,11 +69,11 @@ export async function updateRequest (
   return updatedRequest
 }
 
-export async function joinCampaign (
+async function joinCampaign (
   userId: number,
   requestId: number
 ): Promise<UserCampaign | null> {
-  const joinRequest = await prisma.usercampaign.create({
+  const joinRequest = await prisma.userCampaign.create({
     data: {
       userId,
       requestId
@@ -83,9 +84,9 @@ export async function joinCampaign (
 }
 
 export async function fundCampaign (
-  fundingParticipant: Partial<FundingParticipant>
+  fundingParticipant: any
 ): Promise<FundingParticipant | null> {
-  const fp = await prisma.fundingparticipant.create({
+  const fp = await prisma.fundingParticipant.create({
     data: {
       ...fundingParticipant
     }
@@ -110,18 +111,29 @@ async function requestExist (id: number): Promise<boolean> {
 
 export async function getFundingParticipant (
   requestId: number
-): Promise<User[]> {
+): Promise<any[]> {
   try {
     if (!(await requestExist(requestId))) {
 		throw new Error("Request with given Id Not Found");
 	}
-    const fp = await prisma.fundingparticipant.findMany({
+    const fp = await prisma.fundingParticipant.findMany({
       where: {
         requestId
       }
     })
+
+
     if (fp) {
-      return fp.map((val: FundingParticipant) => val.user)
+      let userids = fp.map((val: FundingParticipant) => val.userId)
+      let users = []
+      for(let id of userids) {
+          try {
+            users.push(await findUserById(id));
+          }catch(err) {
+            logError(err);
+          }
+      }
+      return users;
     }
   } catch (err) {
     logError(err)
@@ -129,23 +141,32 @@ export async function getFundingParticipant (
   return []
 }
 
-export async function getCampaignUsers (requestId: number): Promise<User[]> {
+async function getCampaignUsers (requestId: number): Promise<any[]> {
     if (!(await requestExist(requestId))) {
 		throw new Error("Request with given Id Not Found");
 	}
 
-  const uc = await prisma.usercampaign.findMany({
+  const uc = await prisma.userCampaign.findMany({
     where: {
       requestId
     }
   })
   if (uc) {
-    return uc.map((val: UserCampaign) => val.user)
+    let userids = uc.map((val: UserCampaign) => val.userId)
+    let users = []
+    for(let id of userids) {
+        try {
+          users.push(await findUserById(id));
+        }catch(err) {
+          logError(err);
+        }
+    }
+    return users;
   }
   return []
 }
 
-export async function getAllParticipants (
+async function getAllParticipants (
   requestId: number
 ): Promise<User[] | null> {
   try {
@@ -160,4 +181,13 @@ export async function getAllParticipants (
     logError(err)
     throw err
   }
+}
+
+export default{
+  getAllRequest,
+  getRequestById,
+  createRequest,
+  updateRequest,
+  joinCampaign,
+  getAllParticipants
 }
