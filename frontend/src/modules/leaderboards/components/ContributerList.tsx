@@ -42,7 +42,7 @@ const ContributorList: React.FC<{ contributors: Contributor[] }> = ({
 						</div>
 						<div>
 							<p className="block text-gray-500 text-lg">
-								{contributor.points}
+								{contributor.points} XP
 							</p>
 						</div>
 					</li>
