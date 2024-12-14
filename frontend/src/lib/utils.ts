@@ -35,8 +35,13 @@ export async function login(
   navigate: NavigateFunction
 ): Promise<LoginResponse | null> {
   try {
+    let fcmToken;
     // Make the API call to login
-    const fcmToken = await fetchFCMToken();
+    try {
+      fcmToken = await fetchFCMToken();
+    } catch (error) {
+      console.log("failed to get fcm token");
+    }
     // @ts-ignore
     value.pushToken = fcmToken;
     const response = await api.post<LoginResponse>("/api/auth/login", value);
