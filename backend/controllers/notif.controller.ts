@@ -8,8 +8,8 @@ import { logger, LogType } from "../utils/logger";
 
 export const sendGarbageTruckNotification = async (req: Request,res : Response)=> {
     try {
-        const { checkpointId } = req.body;
-
+        let { checkpointId } = req.body;
+        checkpointId = typeof checkpointId=="number"?checkpointId:parseInt(checkpointId,10);
         const users = await findUsersByCheckpoint(checkpointId);
 
         for(let i=0;i<users.length;i++) {

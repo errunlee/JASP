@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole, type User } from '@prisma/client'
+import { PrismaClient, UserRole, type User,type ScrapProduct } from '@prisma/client'
 import { logError } from '../utils/GenericErrorResponse'
 import { logger, LogType } from '../utils/logger'
 
@@ -118,4 +118,56 @@ export const updateUserData = async (user: any) => {
     logError(err)
     throw err
   }
+}
+
+export const saveProduct = async (data : {
+  userId : number,
+  name : string,
+  price : number
+}) => {
+  try {
+    const product = await prisma.scrapProduct.create({
+       data : {
+        name : data.name,
+        price : data.price,
+        userId : data.userId
+       }
+    })
+
+    return product;
+  }catch(err) {
+    logError(err);
+    throw err
+  }
+}
+
+
+const findAllProductsByUserId = async (userId : number) : Promise<ScrapProduct[]> => {
+  try {
+    const user = await prisma.user.findUnique({
+      where : {
+        id : userId
+      }
+    })
+
+    if(!user) {
+      logger(LogType.ERROR,`User with ${userId} Not found`);
+      throw new Error("User with given id not found");
+    }
+
+    const products = await prisma.scrapProduct.findMany({
+      where : {
+        userId 
+      }
+    })
+    return products;
+  }catch(err) {
+    logError(err);
+    throw err
+  }
+} 
+
+export default {
+  saveProduct,
+  findAllProductsByUserId
 }

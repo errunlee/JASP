@@ -5,6 +5,8 @@ import CheckpointRouter from './checkpoint.route';
 import AuthRouter from './auth.route';
 import DonationRouter from "./donation.route";
 import UserNotifRouter from "./user.notif.route";
+import UserRouter from './user.route';
+
 import { sendResponse } from '../utils/GenericResponse';
 import { isAdmin } from '../middlewares/role.middleware';
 
@@ -17,6 +19,8 @@ router.use('/user/notification', UserNotifRouter);
 
 router.use("/checkpoints", CheckpointRouter);
 router.use("/donations",DonationRouter);
+router.use("/user",UserRouter);
+
 
 router.get('/ping', (req, res) => {
 	sendResponse(res, {
