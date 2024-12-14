@@ -1,5 +1,6 @@
-import { PrismaClient, type Request } from '@prisma/client';
+import { PrismaClient, type Request,type UserCampaign, type FundingParticipant,type User } from '@prisma/client';
 import { PaginationParams } from '../interfaces/pagination-params.interface';
+import { logError } from '../utils/GenericErrorResponse';
 
 const prisma = new PrismaClient();
 
@@ -59,3 +60,69 @@ export async function updateRequest(
 	});
 	return updatedRequest;
 }
+
+
+export async function joinCampaign(
+	userId : number,
+	requestId : number	
+) : Promise<UserCampaign | null> {
+	const joinRequest = await prisma.usercampaign.create({
+		data : {
+			userId,
+			requestId
+		}
+	})
+
+	return joinRequest;
+}
+
+export async function fundCampaign(
+	fundingParticipant : Partial<FundingParticipant>
+): Promise<FundingParticipant | null> {
+	const fp = await prisma.fundingparticipant.create({
+		data : {
+			...fundingParticipant
+		}
+	})
+
+	return fp;
+}
+
+export async function getFundingParticipant(requestId : number) : Promise< User[] > {
+	const fp = await prisma.fundingparticipant.findMany({
+		where : {
+			requestId
+		}
+	})
+	if(fp){
+		return fp.map((val : FundingParticipant)=>val.user)
+	}
+	return [];
+}
+
+	
+
+export async function getCampaignUsers(requestId : number) : Promise< User[]> {
+	const uc = await prisma.usercampaign.findMany({
+		where : {
+			requestId
+		}
+	})
+	if(uc){
+		return uc.map((val : UserCampaign)=>val.user)
+	}
+	return []
+}
+
+export async function getAllParticipants(requestId : number) : Promise< User[] | null> {
+	try {
+		const fps =await getFundingParticipant(requestId);
+		const cus = await getCampaignUsers(requestId);
+
+		return [...fps,...cus];
+	}catch(err) {
+		logError(err);
+		throw err;
+	}
+
+}  
