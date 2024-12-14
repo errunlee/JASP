@@ -28,15 +28,15 @@ const LoginForm = () => {
     resolver: zodResolver(User),
   });
 
+  const navigate = useNavigate();
   const onSubmit = async (value: LoginProps) => {
-    await login(value);
-    nav("/");
+    await login(value, navigate);
   };
 
   return (
     <Form {...form}>
       {form.formState.isSubmitting && <Overlay />}
-      <div className="flex min-h-screen items-center justify-center bg-background -mt-16  text-primary">
+      <div className="flex min-h-screen items-center justify-center bg-background -mt-16  text-primary w-[90%] lg:w-auto mx-auto">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full max-w-sm space-y-4 p-6 border rounded-lg shadow-sm bg-card"

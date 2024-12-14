@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 import axios from "axios";
 import { api } from "./instance";
 import { toast } from "./toast";
+import Swal from "sweetalert2";
+import { NavigateFunction } from "react-router-dom";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -27,7 +29,10 @@ interface LoginResponse {
 }
 
 // Define the function to handle user login
-export async function login(value: LoginProps): Promise<LoginResponse | null> {
+export async function login(
+  value: LoginProps,
+  navigate: NavigateFunction
+): Promise<LoginResponse | null> {
   try {
     // Make the API call to login
     const response = await api.post<LoginResponse>("/api/auth/login", value);
@@ -38,7 +43,7 @@ export async function login(value: LoginProps): Promise<LoginResponse | null> {
     // Store the token in localStorage or cookies for future use
     localStorage.setItem("jwtToken", token);
     localStorage.setItem("user", JSON.stringify(data.user));
-
+    navigate("/");
     return { token, data };
   } catch (error) {
     toast.error("Login failed!");
@@ -67,7 +72,8 @@ export type RegisterProps = {
 
 // Define the function to handle user registration
 export async function register(
-  value: RegisterProps
+  value: RegisterProps,
+  navigate: any
 ): Promise<RegisterResponse | null> {
   try {
     // Make the API call to register
@@ -76,6 +82,18 @@ export async function register(
       value
     );
 
+    Swal.fire({
+      icon: "success",
+      title: "Registered Successfully",
+      text: "Redirecting to login page...",
+      timer: 5000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      didClose: () => {
+        navigate("/login");
+      },
+    });
+
     // Extract the message and optional userId from the response
     const { message, userId } = response.data;
 
@@ -83,9 +101,10 @@ export async function register(
   } catch (error) {
     // Handle error from the API
     if (axios.isAxiosError(error) && error.response) {
-      console.error("Registration failed:", error.response.data);
+      toast.error("Registration failed: " + error.response.data);
     } else {
       console.error("An unexpected error occurred:", error);
+      toast.error("Failed to register");
     }
 
     return null;

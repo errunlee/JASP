@@ -25,7 +25,15 @@ function App() {
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [currentUserId, setCurrentUserId] = useState<string>("");
 
-  const role = "DRIVER" as string;
+  const user = localStorage.getItem("user");
+  let role = "";
+
+  if (user) {
+    role = JSON.parse(user).role[0];
+  }
+
+  const isDriver = role === "VEHICLE_MANAGER";
+
   // Establish socket connection
   useEffect(() => {
     const newSocket: any = io("https://locationtracking-oqi9.onrender.com", {
@@ -53,7 +61,7 @@ function App() {
 
   // Handle incoming location updates
   useEffect(() => {
-    if (!socket || role !== "DRIVER") return;
+    if (!socket || !isDriver) return;
 
     const handleReceiveLocation = (data: MarkerType) => {
       console.log("received", data);
@@ -75,7 +83,7 @@ function App() {
 
   // Get and send current location
   const getLocation = useCallback(() => {
-    if (!socket || role != "DRIVER") return;
+    if (!socket || !isDriver) return;
 
     const watchId = navigator.geolocation.watchPosition(
       (position) => {

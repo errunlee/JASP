@@ -126,7 +126,7 @@ export default function CreateBlog() {
                   onEditorChange={(content) =>
                     form.setValue("content", content)
                   }
-                  initialValue="<p>Start writing your blog...</p>"
+                  initialValue=""
                   init={{
                     height: 500,
                     menubar: true,
