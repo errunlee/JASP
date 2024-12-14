@@ -1,4 +1,5 @@
 import { Response } from "express"
+import { LogType,logger } from "./logger";
 
 export const sendError = (res:Response,body : {
     code ?:number,
@@ -7,14 +8,23 @@ export const sendError = (res:Response,body : {
 }= {
     message : "Something went wrong",
     description : "" 
-},logMessge ?: string)=> {
+},logMessage ?: string)=> {
     if(process.env.ENV=="DEV") {
         console.log(body.description);
-        console.log(logMessge)
     }
+    if(logMessage) {
+        logger(LogType.ERROR,logMessage)
+    }
+
     res.status(body.code ?? 400).json({
         code : body.code,
         message : body.message,
         description : body.description
     })
+}
+
+export const logError  = (error : any)=> {
+    const errMessage = error instanceof Error ? error.message : typeof error == "string"?error:"Undefined Error";
+    logger(LogType.ERROR,errMessage);
+    return errMessage;
 }

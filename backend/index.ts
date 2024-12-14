@@ -14,7 +14,7 @@ app.use(cors({
   origin: '*' // Be cautious with this in production
 }));
 app.use(express.urlencoded({ extended: true }));
-
+app.use("/uploads",express.static('uploads'));
 // Routes
 app.use('/api', MainRouter);
 

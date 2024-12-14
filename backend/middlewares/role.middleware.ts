@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 
 function checkUserRole(requiredRole: string) {
   return (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body.user);
-    // const user = req.user;
+    console.log(req.body);
+    // const user = req.body;
 
     // if (!user) {
     //   return res.status(401).json({ message: 'Unauthorized' });

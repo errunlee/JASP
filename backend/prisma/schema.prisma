@@ -18,9 +18,13 @@ model User {
   roles            UserRole[]
   kycVerified      Boolean              @default(false)
   profilePicture   String?              @db.VarChar(255)
+  orgImage         String?              @db.VarChar(255)
+  orgDescription   String?              @db.VarChar(255)
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
   isDeleted        Boolean              @default(false)
+  checkpointId     Int
+  pushTokens       String[]
   commerceProducts CommerceProduct[]
   claimedDonations Donation[]           @relation("UserClaims")
   donations        Donation[]           @relation("UserDonations")
@@ -29,7 +33,7 @@ model User {
   posts            Post[]
   requests         Request[]
   scrapProducts    ScrapProduct[]
-  checkpoints      Checkpoint[]         @relation("CheckpointToUser")
+  checkpoint       Checkpoint           @relation("CheckpointToUser", fields: [checkpointId], references: [id])
   notifications    Notification[]       @relation("NotificationToUser")
   UserCampaign     UserCampaign[]
 }
@@ -48,16 +52,11 @@ model KnowYourCustomer {
 }
 
 model ScrapProduct {
-  id        Int      @id @default(autoincrement())
-  type      String   @db.VarChar(100)
-  price     Float
-  details   String
-  image     String   @db.VarChar(255)
-  dealerId  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-  dealer    User     @relation(fields: [dealerId], references: [id])
+  id     Int    @id @default(autoincrement())
+  name   String
+  price  Float
+  User   User?  @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model Donation {
@@ -161,6 +160,7 @@ model Notification {
 
 model Checkpoint {
   id        Int      @id @default(autoincrement())
+  name      String
   longitude Float
   latitude  Float
   createdAt DateTime @default(now())

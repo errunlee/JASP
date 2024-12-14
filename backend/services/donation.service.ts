@@ -1,4 +1,5 @@
 import { PrismaClient,ProductCategory } from '@prisma/client'
+import { idToNumber } from '../controllers/donation.controller'
 
 const prisma = new PrismaClient()
 
@@ -46,16 +47,18 @@ export const updateDonation = async (donation : any) => {
 
     for(let key in donation) {
         if(key=="id") continue;
+
         obj[key] = donation[key];
     }
+
     return await prisma.donation.update({
-    where: {
-      id
-    },
-    data: {
-        ...obj
-    }
-  })
+      where: {
+        id
+      },
+      data: {
+          ...obj
+      }
+    }) 
 }
 
 
@@ -85,11 +88,15 @@ export const claimDonation = async (donation : {id : number, claimerId : number}
 
 
 export const findAllDonations = async (donation : {category :ProductCategory }) =>{
-  return await prisma.donation.findMany({
-    where : {
-      category: donation.category
-    }
-})
+  if(donation.category) {
+    return await prisma.donation.findMany({
+      where : {
+        category: donation.category
+      }
+    })
+  }
+  return await prisma.donation.findMany();
+  
 }
 export default {
   saveDonation,

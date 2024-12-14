@@ -1,24 +1,33 @@
 import { Request,Response } from "express";
-import { sendError } from "../utils/GenericErrorResponse"
+import { logError, sendError } from "../utils/GenericErrorResponse"
 import donationService from "../services/donation.service";
 import { sendResponse } from "../utils/GenericResponse";
 
+export const idToNumber  = (id:number|string|String,to=1)=> {
+    return typeof id == "number"?id:to==1?parseInt(id as string,10):parseFloat(id as string);
+}
+
+
 export const createDonation = async (req: Request,res : Response)=> {
    try {
-        const {name,donatorId,file,details,location,category} = req.body;
+        const {name,donatorId,details,location,category} = req.body;
+        const file = req.file;
+
         const donation = await donationService.saveDonation({
             name,
-            donatorId,
-            image : file.path,
+            donatorId : idToNumber(donatorId),
+            image : file!=undefined?file.path.replace("\\","/"):"",
             details,
             location,
             category
         })
         sendResponse(res, {
             code : 201,
-            message : "Resource Sucessfully Created"
+            message : "Resource Sucessfully Created",
+            data : donation
         })
     }catch(err) {
+        logError(err);
         sendError(res,{
             message : err instanceof Error ? err.message: typeof err=="string"?err:""
         })
@@ -36,22 +45,27 @@ export const updateDonation = async (req : Request, res : Response) => {
             return
         }
         const obj : any = {}
-
+        const file = req.file;
+        
         for(let key in req.body) {
             if(key=="id") continue;
-            if(key=="file") {
-                obj["image"] = req.body[key].path
-            }
+            if(key=="donatorId") obj[key] = idToNumber(req.body[key])
             obj[key] = req.body[key];
         }
+
+        obj.image = file?file.path.replace("\\","/"):"";
+
         const donation = await donationService.updateDonation({
+            id,
             ...obj
         })
         sendResponse(res, {
             code : 200,
-            message : "Resource Sucessfully Updated"
+            message : "Resource Sucessfully Updated",
+            data :donation
         })
     }catch(err) {
+        logError(err);
         sendError(res,{
             message : err instanceof Error ? err.message: typeof err=="string"?err:""
         })
@@ -119,7 +133,7 @@ export const getDonations = async (req : Request, res : Response) => {
     try {
         const { category } = req.body;
 
-        const donation = await donationService.findAllDonations({
+        const donations = await donationService.findAllDonations({
             category
         })
 
@@ -127,7 +141,7 @@ export const getDonations = async (req : Request, res : Response) => {
         sendResponse(res, {
             code : 200,
             message : "Resource Sucessfully Claimed",
-            data : donation
+            data : donations
         })
     }catch(err) {
         sendError(res,{
