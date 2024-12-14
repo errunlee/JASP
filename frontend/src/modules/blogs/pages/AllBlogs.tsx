@@ -1,3 +1,4 @@
+
 import BlogSkeleton from "../components/BlogsSkeleton";
 import SingleBlog, { BlogResponse } from "../components/SingleBlog";
 import { getAllBlogs } from "../hooks/useGetAllBlogs";
