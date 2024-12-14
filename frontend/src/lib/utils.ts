@@ -47,13 +47,13 @@ export async function login(
     const response = await api.post<LoginResponse>("/api/auth/login", value);
 
     // Extract the token and message from the response
-    const { token, data } = response.data;
+    const { token, user } = response.data.data;
 
     // Store the token in localStorage or cookies for future use
-    localStorage.setItem("jwtToken", token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
     navigate("/");
-    return { token, data };
+    // return { token, data };
   } catch (error) {
     toast.error("Login failed!");
     // Handle error from the API

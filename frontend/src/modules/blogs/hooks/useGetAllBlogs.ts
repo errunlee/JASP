@@ -8,7 +8,6 @@ export const getAllBlogs = async () => {
     const response = await api.get(endPoint);
     return response.data.data;
   } catch {
-    toast.error("Failed to get blogs");
     return [];
   }
 };
