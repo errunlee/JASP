@@ -30,11 +30,15 @@ const Homepage: React.FC = () => {
 
 			{/* Features Section */}
 			<section id="features" className="py-20 bg-background  px-8">
+				<h2 className="text-4xl font-bold mb-10 text-foreground">
+					Key Features
+				</h2>
+
 				<div className="container mx-auto text-center">
 					<h2 className="text-4xl font-bold mb-10 text-foreground">
 						Key Features
 					</h2>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 ">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12 ">
 						<div className="bg-green-100 p-6 rounded-lg shadow-lg">
 							<h3 className="text-2xl font-semibold mb-4 font-openSans">
 								Smart Waste Notifications
