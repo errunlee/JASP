@@ -30,10 +30,6 @@ const Homepage: React.FC = () => {
 
 			{/* Features Section */}
 			<section id="features" className="py-20 bg-background  px-8">
-				<h2 className="text-4xl font-bold mb-10 text-foreground">
-					Key Features
-				</h2>
-
 				<div className="container mx-auto text-center">
 					<h2 className="text-4xl font-bold mb-10 text-foreground">
 						Key Features

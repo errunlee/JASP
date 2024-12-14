@@ -78,10 +78,10 @@ const DonationHub: React.FC = () => {
 								<CardTitle className="text-lg font-semibold">
 									{item.title}
 								</CardTitle>
-								<p className="text-sm text-gray-700 dark:text-slate-200">
+								<p className="text-sm text-gray-700 dark:text-slate-200 mt-4">
 									Category: {item.category}
 								</p>
-								<p className="text-sm text-gray-700 dark:text-slate-200">
+								<p className="text-sm text-gray-700 dark:text-slate-200 mt-2">
 									Condition: {item.condition}
 								</p>
 								<p className="mt-2 text-sm text-gray-700 dark:text-slate-200">

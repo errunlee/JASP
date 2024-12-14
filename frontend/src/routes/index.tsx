@@ -62,7 +62,7 @@ const routes = [
 				children: ScrapDealersRoutes
 			},
 			{
-				path: '/leaders',
+				path: '/leaderboard',
 				element: <Outlet />,
 				children: LeaderboardRoutes
 			},
