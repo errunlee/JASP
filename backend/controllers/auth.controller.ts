@@ -24,7 +24,7 @@ export const register = async (req: Request, res: Response) => {
 		const user = await createUser({
 			username,
 			email,
-			password: hashedPassword
+			password: hashedPassword,
 		});
 
 		sendResponse(res, {

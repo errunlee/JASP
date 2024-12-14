@@ -15,7 +15,7 @@ router.use('/blog', PostRouter);
 router.use('/auth', AuthRouter);
 router.use('/user/notification', UserNotifRouter);
 
-router.use("/checkpoints",isAdmin(), CheckpointRouter);
+router.use("/checkpoints", CheckpointRouter);
 router.use("/donations",DonationRouter);
 
 router.get('/ping', (req, res) => {

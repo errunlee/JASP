@@ -13,6 +13,7 @@ export const createUser = async (data: { username: string; email: string; passwo
             email,
             password,
             roles: userRoles,
+            // checkpoints: checkpointId
         }
     });
 };

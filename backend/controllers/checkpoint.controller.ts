@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findCheckpointByGeoSpatialCoor,findAllCheckpoints } from "../services/checkpoint.service";
+import { findCheckpointByGeoSpatialCoor,findAllCheckpoints, createCheckpoint } from "../services/checkpoint.service";
 import { sendResponse } from "../utils/GenericResponse";
 import { sendError } from "../utils/GenericErrorResponse";
 import {Checkpoint} from "@prisma/client";
@@ -34,9 +34,9 @@ export const getCheckpoints = async(req : Request,res : Response) => {
 
 export const saveCheckpoint = async(req : Request, res : Response) => {
     try {
-        const { longitude, latitude } = req.body;
-        if(longitude && latitude) {
-            const checkpoint = await saveCheckpoint(latitude,longitude);
+        const { longitude, latitude, name } = req.body;
+        if(longitude && latitude && name) {
+            const checkpoint = await createCheckpoint(latitude,longitude, name);
             sendResponse(res,{
                 code :200,
                 message : "Checkpoints",
@@ -56,3 +56,18 @@ export const saveCheckpoint = async(req : Request, res : Response) => {
     }
 }
 
+export const getAllCheckpoints = async (req:Request, res:Response) => {
+    try {
+        const checkpoints = await findAllCheckpoints();
+        sendResponse(res, {
+            code: 200,
+            message: "All Checkpoints",
+            data: checkpoints
+        })
+    } catch (error) {
+        sendError(res, {
+            code: 500,
+            message: error instanceof Error ? error.message : typeof error == "string" ? error : ""
+        })
+    }
+}

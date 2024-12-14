@@ -15,9 +15,10 @@ export const findAllCheckpoints = async () => {
     return await prisma.checkpoint.findMany();
 };
 
-export const saveCheckpoint = async(latitude:number,longitude:number) => {
+export const createCheckpoint = async(latitude:number,longitude:number, name:string) => {
     return await prisma.checkpoint.create({
         data : {
+            name,
             latitude,
             longitude 
         }
