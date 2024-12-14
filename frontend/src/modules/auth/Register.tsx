@@ -16,7 +16,7 @@ import { api } from "@/lib/instance";
 import { register, RegisterProps } from "@/lib/utils";
 import Overlay from "@/components/Overlay";
 
-type Checkpoint = {
+export type Checkpoint = {
   id: number;
   name: string;
   longitude: number;
@@ -27,10 +27,10 @@ type Checkpoint = {
 };
 
 const roles = [
-  {
-    label: "Regular User",
-    value: "REGULAR_USER",
-  },
+  // {
+  //   label: "Regular User",
+  //   value: "REGULAR_USER",
+  // },
   {
     label: "Vehicle Manager",
     value: "VEHICLE_MANAGER",
@@ -73,7 +73,7 @@ const RegisterForm = () => {
       confirmPassword: z
         .string()
         .nonempty({ message: "Confirm Password is required" }),
-      role: z.string().nonempty({ message: "Role is required" }), // Ensuring role is required
+      roles: z.string(), // Ensuring role is required
       checkpoint: z.number().nonnegative({ message: "Checkpoint is required" }),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -87,7 +87,7 @@ const RegisterForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "",
+      roles: "",
       checkpoint: undefined, // Checkpoint id for form submission
     },
     resolver: zodResolver(User), // Your validation
@@ -102,6 +102,8 @@ const RegisterForm = () => {
   const onSubmit = async (value: RegisterProps) => {
     //@ts-ignore
     value.checkpointId = value.checkpoint;
+    //@ts-ignore
+    value.roles = [value.roles];
     await register(value, navigate);
   };
   return (
@@ -154,8 +156,8 @@ const RegisterForm = () => {
               placeholder="Select your role"
               data={roles}
               form={form}
-              name="role"
-              label="Role"
+              name="roles"
+              label="Role (optional)"
             />
           </div>
           {/* Your other form fields here */}
