@@ -43,6 +43,12 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileNavOpen) {
+      setMobileNavOpen(false);
+    }
+  }, [location.pathname]);
+
   return (
     <header
       className={`text-primary fixed top-0 left-0 right-0 z-[300] transition-colors duration-300 ${
@@ -63,7 +69,7 @@ const Navbar = () => {
         >
           <div className="h-8 w-8 bg-secondary rounded-full outline outline-2 outline-green-800 dark:outline-slate-100 justify-center">
             <img
-              src="/green_leaves_round_logo.jpg"
+              src="/logo.png"
               alt="logo"
               className="w-8 h-8 rounded-full brightness-[90%]"
             />
