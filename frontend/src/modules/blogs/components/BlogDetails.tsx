@@ -1,28 +1,24 @@
 import { Link, useParams } from "react-router-dom";
-import { tempBlogs as blogs } from "../pages/tempBlogs";
+// import { tempBlogs as blogs } from "../pages/tempBlogs";
 import { api, baseURL } from "@/lib/instance";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BlogResponse } from "./SingleBlog";
 import BlogSkeleton from "./BlogDetailLoader";
 
-type Blog = {
-  id: number;
-  authorId: number;
-  title: string;
-  description: string;
-  content: string;
-  tags: string[];
-  createdAt: string;
-  modifiedAt: string;
-  createdBy: string;
-  modifiedBy: string;
-  image?: string;
-};
-
-type Props = {
-  blog: Blog;
-};
+// type Blog = {
+//   id: number;
+//   authorId: number;
+//   title: string;
+//   description: string;
+//   content: string;
+//   tags: string[];
+//   createdAt: string;
+//   modifiedAt: string;
+//   createdBy: string;
+//   modifiedBy: string;
+//   image?: string;
+// };
 
 const BlogDetailsPage = () => {
   const { blogId } = useParams();

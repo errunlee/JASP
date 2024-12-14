@@ -19,7 +19,6 @@ const LoginForm = () => {
       }),
   });
 
-  const nav = useNavigate();
   const form = useForm({
     defaultValues: {
       email: "",

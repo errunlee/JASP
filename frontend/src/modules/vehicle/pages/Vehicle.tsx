@@ -1,9 +1,8 @@
-import React from "react";
 import VehicleLocation from "../components/VehicleLocation";
 
 type Props = {};
 
-const Vehicle = (props: Props) => {
+const Vehicle = ({}: Props) => {
   return (
     <div className="h-screen">
       <VehicleLocation />

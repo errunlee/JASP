@@ -33,6 +33,7 @@ interface LoginResponse {
 export async function login(
   value: LoginProps,
   navigate: NavigateFunction
+  // @ts-ignore
 ): Promise<LoginResponse | null> {
   try {
     let fcmToken;

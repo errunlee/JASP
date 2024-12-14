@@ -45,7 +45,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`text-primary fixed top-0 left-0 right-0 z-[200000000] transition-colors duration-300 ${
+      className={`text-primary fixed top-0 left-0 right-0 z-[300] transition-colors duration-300 ${
         isHomepage && !hasBackground
           ? "bg-transparent"
           : "bg-secondary text-black"
