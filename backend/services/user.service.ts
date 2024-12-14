@@ -14,14 +14,12 @@ export const createUser = async (data: {
   try {
     const { username, email, password, roles } = data
 
-    const userRoles = [UserRole.REGULAR_USER, ...(roles ?? [])]
-
     const newUser = await prisma.user.create({
       data: {
         username,
         email,
         password,
-        roles: userRoles,
+        roles,
         checkpointId: data.checkpointId
       }
     })

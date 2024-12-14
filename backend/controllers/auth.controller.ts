@@ -83,11 +83,15 @@ export const login: any = async (req: Request, res: Response) => {
         expiresIn: process.env.JWT_EXPIRATION
       }
     )
-
-    user = await updateUserData({
-      id: user.id,
-      pushTokens: [...user.pushTokens, pushToken]
-    })
+    let error = "";
+    try {
+      user = await updateUserData({
+        id: user.id,
+        pushTokens: [...user.pushTokens, pushToken]
+      })
+    }catch(err) {
+      error = logError(err);
+    }
 
     logger(LogType.INFO, `${user}`)
     sendResponse(res, {
@@ -100,7 +104,8 @@ export const login: any = async (req: Request, res: Response) => {
           role: user.roles,
           pushTokens: user.pushTokens
         }
-      }
+      },
+      description: error
     })
   } catch (error) {
     if (error instanceof Error) {

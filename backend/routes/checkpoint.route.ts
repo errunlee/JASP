@@ -4,8 +4,8 @@ import { isAdmin } from "../middlewares/role.middleware";
 
 const router = Router();
 
-router.get("/", isAdmin(), getCheckpoints);
-router.post("/", isAdmin(), saveCheckpoint);
+router.get("/", getCheckpoints);
+router.post("/", saveCheckpoint);
 // router.get("/dep", getAllCheckpoints);
 
 
