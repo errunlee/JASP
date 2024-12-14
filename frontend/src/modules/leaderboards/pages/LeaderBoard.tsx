@@ -135,18 +135,20 @@ interface LeaderboardProps {
 const Leaderboard: React.FC<LeaderboardProps> = () => {
 	return (
 		<div className="grid grid-cols-1 place-items-center gap-4 p-2 md:p-4">
-			<h2 className="text-2xl font-bold mb-8 text-center">Top Contributors</h2>
+			<h2 className="text-2xl font-roboto font-bold mb-8 text-center">
+				Top Contributors
+			</h2>
 			<Tabs defaultValue="volunteers" className="w-[90%] max-w-[480px]">
 				<TabsList className="grid w-full grid-cols-2 mb-8 h-12">
 					<TabsTrigger
 						value="volunteers"
-						className="text-lg text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
+						className="text-lg font-openSans font-semibold text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
 					>
 						Top Volunteers
 					</TabsTrigger>
 					<TabsTrigger
 						value="sponsors"
-						className="text-lg text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
+						className="text-lg font-openSans font-semibold text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
 					>
 						Top Sponsors
 					</TabsTrigger>

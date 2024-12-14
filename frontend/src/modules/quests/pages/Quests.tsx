@@ -61,7 +61,7 @@ const Quests: React.FC = () => {
 	return (
 		<div className="grid grid-cols-1 place-items-center gap-4 p-2 md:p-4 ">
 			<header className="mb-8">
-				<h1 className="text-3xl font-roboto tracking-wider font-bold text-center mb-6 text-emerald-600 dark:text-emerald-400">
+				<h1 className="text-3xl font-roboto tracking-wide font-bold text-center mb-6 text-emerald-600 dark:text-emerald-400">
 					Quest Page
 				</h1>
 				<p className="text-lg text-gray-700 dark:text-slate-200">
@@ -72,13 +72,13 @@ const Quests: React.FC = () => {
 				<TabsList className="grid w-full grid-cols-2 mb-8 h-12">
 					<TabsTrigger
 						value="weekly"
-						className="text-lg text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
+						className="text-lg font-parkinsans text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
 					>
 						Weekly Quests
 					</TabsTrigger>
 					<TabsTrigger
 						value="monthly"
-						className="text-lg text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
+						className="text-lg font-parkinsans text-black dark:text-white data-[state=active]:text-emerald-800 data-[state=active]:font-semibold data-[state=active]:border-b-2 data-[state=active]:border-emerald-500"
 					>
 						Monthly Quests
 					</TabsTrigger>

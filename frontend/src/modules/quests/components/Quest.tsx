@@ -18,7 +18,7 @@ const QuestCard: React.FC<{
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<p className="mb-3 text-lg text-green-600 dark:text-emerald-300 font-semibold hover:underline">
+				<p className="mb-3 text-lg text-green-600 dark:text-emerald-300 font-semibold ">
 					{quest.description}
 				</p>
 

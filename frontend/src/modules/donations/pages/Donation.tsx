@@ -75,7 +75,7 @@ const DonationHub: React.FC = () => {
 								/>
 							</CardHeader>
 							<CardContent>
-								<CardTitle className="text-lg font-semibold">
+								<CardTitle className="text-lg font-roboto font-semibold">
 									{item.title}
 								</CardTitle>
 								<p className="text-sm mt-4 text-gray-700 dark:text-slate-200">
@@ -103,7 +103,7 @@ const DonationHub: React.FC = () => {
 					))}
 				</div>
 			</div>
-			<h2 className="mt-12 text-xl font-roboto tracking-wider font-bold text-center mb-6 text-emerald-600 dark:text-emerald-400">
+			<h2 className="mt-12 text-xl font-parkinsans tracking-wider font-semibold text-center mb-6 text-emerald-600 dark:text-emerald-400">
 				Together, We Transform Waste into Hope
 			</h2>
 		</div>

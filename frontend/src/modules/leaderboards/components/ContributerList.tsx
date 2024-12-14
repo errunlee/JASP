@@ -38,7 +38,9 @@ const ContributorList: React.FC<{ contributors: Contributor[] }> = ({
 									{contributor.name.substring(0, 2)}
 								</AvatarFallback>
 							</Avatar>
-							<p className="font-semibold text-lg mr-2">{contributor.name}</p>
+							<p className="font-semibold font-parkinsans text-lg mr-2">
+								{contributor.name}
+							</p>
 						</div>
 						<div>
 							<p className="block text-gray-500 text-lg">
