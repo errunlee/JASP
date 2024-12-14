@@ -36,6 +36,7 @@
     "react-leaflet": "^4.2.1",
     "react-multi-carousel": "^2.8.5",
     "react-router-dom": "^7.0.1",
+    "socket.io-client": "^4.8.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "tinymce": "^7.5.1",
