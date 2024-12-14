@@ -1,18 +1,18 @@
-import SingleCampaign from "../components/SingleCampaign";
+import SingleCampaign from '../components/SingleCampaign';
+import campaigns from '../campaignsData';
+import { useState } from 'react';
 
-type Props = {};
-
-const AllCampaigns = ({}: Props) => {
-  const data = new Array(5).fill(0);
-  return (
-    <div className="container mx-auto bg-background">
-      <section className="grid md:grid-cols-3 gap-3">
-        {data.map((item, index) => (
-          <SingleCampaign campaign={item} key={index} />
-        ))}
-      </section>
-    </div>
-  );
+const AllCampaigns = () => {
+	const [causes, setCauses] = useState(campaigns);
+	return (
+		<div className="container mx-auto bg-background">
+			<section className="grid md:grid-cols-3 gap-3">
+				{causes.map((item, index) => (
+					<SingleCampaign campaign={item} key={index} />
+				))}
+			</section>
+		</div>
+	);
 };
 
 export default AllCampaigns;
