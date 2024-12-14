@@ -1,8 +1,8 @@
 import "colors"
 export enum LogType {
-    ERROR,
-    WARNING,
-    INFO
+    ERROR ="ERROR",
+    WARNING = "WARNING",
+    INFO = "INFO"
 }
 
 const dateFormat = (date : Date)=>{
@@ -24,5 +24,5 @@ export const logger = (type:LogType, message:string)=> {
             
             break;
     } 
-    console.log(`[${type.toString()}] [${dateFormat(new Date())}] ${message}`)
+    console.log(`[${typeString}] [${dateFormat(new Date())}] ${message}`)
 }

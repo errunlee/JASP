@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
-const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateUser :any = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
 
   if (!token) {
@@ -22,4 +22,3 @@ const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default authenticateUser;
