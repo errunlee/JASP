@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login, LoginProps } from "@/lib/utils";
 import Overlay from "@/components/Overlay";
 const LoginForm = () => {
@@ -19,6 +19,7 @@ const LoginForm = () => {
       }),
   });
 
+  const nav = useNavigate();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -29,6 +30,7 @@ const LoginForm = () => {
 
   const onSubmit = async (value: LoginProps) => {
     await login(value);
+    nav("/");
   };
 
   return (
