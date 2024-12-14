@@ -15,6 +15,9 @@ type Props = {};
 
 // eslint-disable-next-line no-empty-pattern
 const ProfileDropdown = ({}: Props) => {
+  const isLoggedIn = localStorage.getItem("token");
+
+  console.log("isLoggedIn", isLoggedIn);
   const navigate = useNavigate();
 
   const DropdownItems = {
@@ -33,7 +36,11 @@ const ProfileDropdown = ({}: Props) => {
       },
       {
         label: "LogOut",
-        onclick: () => {},
+        onclick: () => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          navigate("/login");
+        },
       },
     ],
     isLoggedOut: [
@@ -46,7 +53,6 @@ const ProfileDropdown = ({}: Props) => {
     ],
   };
 
-  const isLoggedIn = true;
   return (
     <>
       <DropdownMenu>

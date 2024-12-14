@@ -1,8 +1,6 @@
-import React from "react";
-
 type Props = {};
 
-const Spinner = (props: Props) => {
+const Spinner = ({}: Props) => {
   return (
     <div>
       <div role="status">
