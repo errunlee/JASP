@@ -21,7 +21,7 @@ model User {
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
   isDeleted        Boolean              @default(false)
-  checkpointId    Int                   
+  checkpointId     Int
   pushTokens       String[]
   commerceProducts CommerceProduct[]
   claimedDonations Donation[]           @relation("UserClaims")
@@ -31,7 +31,7 @@ model User {
   posts            Post[]
   requests         Request[]
   scrapProducts    ScrapProduct[]
-  checkpoint     Checkpoint        @relation("CheckpointToUser",fields : [checkpointId],references : [id])
+  checkpoint       Checkpoint           @relation("CheckpointToUser", fields: [checkpointId], references: [id])
   notifications    Notification[]       @relation("NotificationToUser")
   UserCampaign     UserCampaign[]
 }
@@ -50,16 +50,11 @@ model KnowYourCustomer {
 }
 
 model ScrapProduct {
-  id        Int      @id @default(autoincrement())
-  type      String   @db.VarChar(100)
-  price     Float
-  details   String
-  image     String   @db.VarChar(255)
-  dealerId  Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
-  dealer    User     @relation(fields: [dealerId], references: [id])
+  id     Int    @id @default(autoincrement())
+  name   String
+  price  Float
+  User   User?  @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model Donation {
