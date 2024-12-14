@@ -32,7 +32,8 @@ export async function createPost(postData: Post): Promise<Post> {
 			title: postData.title,
 			content: postData.content,
 			description: postData.description,
-			tags: postData.tags
+			tags: postData.tags,
+			image: postData.image
 		}
 	});
 	return newPost;

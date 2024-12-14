@@ -53,3 +53,28 @@ export const findUsersByCheckpoint = async (checkpoint : number) => {
         }
     });
 };
+
+export const updateUserData = async (data: {
+    id: number;
+    roles?: UserRole[];
+    fullName?: string;
+    address?: string;
+    phoneNumber?: string;
+    profilePicture?:string;
+}) => {
+    const { id, roles, fullName, address, phoneNumber, profilePicture } = data;
+
+    const userRoles = [UserRole.REGULAR_USER,...roles ?? []];
+
+    return await prisma.user.update({
+        where: {
+            id,
+        },
+        data: {
+            fullName,
+            address,
+            phoneNumber,
+            profilePicture,
+        }
+    });
+}
