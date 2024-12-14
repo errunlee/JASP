@@ -5,6 +5,7 @@ import { api } from "./instance";
 import { toast } from "./toast";
 import Swal from "sweetalert2";
 import { NavigateFunction } from "react-router-dom";
+import { fetchFCMToken } from "@/firebase/firebase";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -35,6 +36,9 @@ export async function login(
 ): Promise<LoginResponse | null> {
   try {
     // Make the API call to login
+    const fcmToken = await fetchFCMToken();
+    // @ts-ignore
+    value.pushToken = fcmToken;
     const response = await api.post<LoginResponse>("/api/auth/login", value);
 
     // Extract the token and message from the response
