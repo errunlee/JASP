@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { NavLink, useLocation } from "react-router-dom";
 import ProfileDropdown from "./ProfileDropdown";
@@ -6,10 +6,7 @@ import ProfileDropdown from "./ProfileDropdown";
 const Navbar = () => {
   const ref = useRef<HTMLDivElement>(null);
   const location = useLocation();
-
-  // Determine text color based on route
-  // const textColor = location.pathname === '/' ? 'text-white' : 'text-black';
-
+  const [hasBackground, setHasBackground] = useState(false);
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   const navLinks = [
@@ -33,10 +30,26 @@ const Navbar = () => {
 
   const isHomepage = location.pathname === "/";
 
+  // Intersection Observer to track scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight) {
+        setHasBackground(true);
+      } else {
+        setHasBackground(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
-      className={` text-primary absolute top-0  left-0 right-0 z-20 ${
-        isHomepage ? "bg-transparent" : "bg-secondary text-black"
+      className={`text-primary fixed top-0 left-0 right-0 z-20 transition-colors duration-300 ${
+        isHomepage && !hasBackground
+          ? "bg-transparent"
+          : "bg-secondary text-black"
       }`}
     >
       <nav className="container mx-auto flex justify-between items-center p-4">
@@ -44,7 +57,9 @@ const Navbar = () => {
         <NavLink
           to={"/"}
           className={`flex items-center space-x-2 ${
-            isHomepage ? "text-white" : "text-black dark:text-white"
+            isHomepage && !hasBackground
+              ? "text-white"
+              : "text-black dark:text-white"
           }`}
         >
           <div className="h-8 w-8 bg-secondary rounded-full outline outline-2 outline-green-800 dark:outline-slate-100 justify-center">
@@ -54,7 +69,7 @@ const Navbar = () => {
               className="w-8 h-8 rounded-full brightness-[90%]"
             />
           </div>
-          <span className={`text-xl  font-semibold tracking-wider  `}>
+          <span className={`text-xl font-semibold tracking-wider`}>
             Trashformers
           </span>
         </NavLink>
@@ -79,7 +94,7 @@ const Navbar = () => {
             p-8 md:p-0
             z-30 md:z-0 text-white
             ${
-              isHomepage
+              isHomepage && !hasBackground
                 ? "md:text-white"
                 : "text-white md:text-black dark:md:text-white"
             }
@@ -93,8 +108,8 @@ const Navbar = () => {
                 className={({ isActive }) => `
                 text-2xl md:text-lg 
                 hover:text-gray-500 
-			  dark:hover:text-emerald-300
-			  hover:border-b-2 hover:border-gray-700 dark:hover:border-slate-100
+																dark:hover:text-emerald-300
+																hover:border-b-2 hover:border-gray-700 dark:hover:border-slate-100
                 transition duration-300 
                 ${isActive ? "border-primary border-b-2" : ""}
               `}
