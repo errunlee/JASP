@@ -121,7 +121,7 @@ export default function CreateBlog() {
 							<div>
 								<Label htmlFor="content">Content</Label>
 								<Editor
-									apiKey="hiyi55219jowbez4et4l15xk73k2wh14bdeio77aave8j5k5"
+									apiKey="9p09w42s6h9zhcfass6974g7ejv4ocl4pkai2i5d5mxhao9v"
 									onInit={(_, editor) => (editorRef.current = editor)}
 									onEditorChange={(content) =>
 										form.setValue('content', content)
