@@ -1,5 +1,14 @@
 import { useState } from 'react';
 import EsewaPaymentForm from './EsewaPayment';
+import { Alert } from '@/lib/toast';
+
+interface Campaign {
+	title: string;
+	targetAmount: number;
+	collectedAmount: number;
+	targetMembers: number;
+	currentMembers: number;
+}
 
 const CampaignDetail = () => {
 	// Placeholder campaign data
@@ -36,7 +45,7 @@ const CampaignDetail = () => {
 	// Handle join campaign
 	const handleJoinCampaign = () => {
 		setIsJoined(true);
-		alert('You have joined the campaign!');
+		Alert('Success', 'You have successfully joined the campaign.', 'success');
 	};
 
 	// Progress percentage
