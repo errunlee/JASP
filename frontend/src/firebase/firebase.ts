@@ -1,5 +1,4 @@
 import { getMessaging, getToken } from "firebase/messaging";
-import axios from "axios";
 import { initializeApp } from "firebase/app";
 
 // const sendTokenToBackend = async (token:) => {

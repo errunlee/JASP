@@ -1,5 +1,4 @@
 import { api } from "@/lib/instance";
-import { toast } from "@/lib/toast";
 
 const endPoint = "/api/blog?limit=50";
 
