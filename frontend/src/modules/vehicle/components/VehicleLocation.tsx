@@ -29,9 +29,7 @@ function App() {
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [currentUserId, setCurrentUserId] = useState<string>("");
 
-  const { data: checkpoints, isLoading: isCheckPointsLoading } = useQuery<
-    Checkpoint[]
-  >({
+  const { data: checkpoints } = useQuery<Checkpoint[]>({
     queryKey: ["checkpoints"],
     queryFn: async () => {
       const res = await api.get("/api/checkpoints");
