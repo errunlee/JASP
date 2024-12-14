@@ -83,7 +83,7 @@ export const getById = async (req: Request, res: Response) => {
 // Create a new post
 export const create = async (req: Request, res: Response) => {
 	try {
-		const newPost = await createPost(req.body);
+		const newPost = await createPost(req.body, req.file);
 		return sendResponse(res, {
 			code: 200,
 			message: 'Post created successfully',
@@ -94,7 +94,7 @@ export const create = async (req: Request, res: Response) => {
 			code: 500,
 			message: 'Internal server error',
 			description: error.message
-		});
+		}, 'Error creating post');
 	}
 };
 
